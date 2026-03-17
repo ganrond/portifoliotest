@@ -766,6 +766,9 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 #hub-player.tiny     .player-sprite { font-size: clamp(9px,1.5vw,11px) !important; transition: font-size 0.35s; }
 #hub-player.hiding   .player-sprite { opacity: 0.18 !important; filter: brightness(0.4) !important; transition: opacity 0.3s, filter 0.3s; }
 #hub-player.swimming .player-sprite { filter: drop-shadow(0 0 10px rgba(34,211,238,0.9)) !important; }
+
+/* Make interactive terrain elements clickable */
+[id^="it-"] { pointer-events: auto !important; }
 </style>
 </head>
 <body>
@@ -1001,22 +1004,26 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
         </div>
       </div>
 
-      <!-- SAVE POINT — bottom center (teal roof) -->
+      <!-- POST OFFICE — bottom center (teal roof) -->
       <div class="portal" id="p-contact" style="left:50%;bottom:7%;transform:translateX(-50%);"
            onclick="portalClick('s-contact', this)">
         <div class="portal-wrap">
           <div class="p-ring" style="--rd:0.6s;"></div>
+          <div class="p-chimney" style="left:6px;right:auto;"></div>
+          <div class="p-smoke" style="--sd:0.3s;left:4px;right:auto;"></div>
           <div class="p-roof teal"></div>
-          <div class="p-body teal">
+          <div class="p-body teal" style="width:clamp(50px,8vw,60px);">
             <div class="p-win L teal" style="--wt:3s;--wd:0.8s;"></div>
             <div class="p-win R teal" style="--wt:3s;--wd:1.8s;"></div>
+            <!-- Mail slot -->
+            <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:clamp(14px,2.2vw,18px);height:3px;background:rgba(34,211,238,0.5);border:1px solid rgba(34,211,238,0.7);border-radius:1px;"></div>
           </div>
           <!-- Side sign — RIGHT side, teal accent -->
           <div class="p-sign right" style="--ss:1.5s;">
             <div class="sign-arm" style="background:linear-gradient(90deg,rgba(34,211,238,0.8),rgba(34,211,238,0.3));"></div>
             <div class="sign-board" style="border-color:rgba(34,211,238,0.7);">
-              <span class="sign-icon">💾</span>
-              <span class="sign-label teal">SAVE PT</span>
+              <span class="sign-icon">📮</span>
+              <span class="sign-label teal">POST OFFICE</span>
             </div>
           </div>
           <div class="p-shadow"></div>
@@ -1153,16 +1160,16 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 </div>
 
 <!-- ================================================================
-     S6 — SAVE POINT
+     S6 — POST OFFICE
 ================================================================ -->
 <div class="screen" id="s-contact">
   <div style="position:relative;z-index:2;width:min(700px,97vw);">
     <div class="win scroll" style="padding:clamp(18px,2.5vh,26px) clamp(18px,2.5vw,26px);max-height:88vh;">
       <div class="bc"></div>
       <div class="crystal-wrap">
-        <span class="crystal-icon">💎</span>
-        <span class="crystal-title">SAVE POINT</span>
-        <div class="crystal-sub">WOULD YOU LIKE TO START A QUEST?</div>
+        <span class="crystal-icon">📮</span>
+        <span class="crystal-title">POST OFFICE</span>
+        <div class="crystal-sub">SEND A MESSAGE TO BRUNO</div>
       </div>
       <form id="contact-form" onsubmit="handleSubmit(event)">
         <div class="form-2col">
@@ -1178,9 +1185,9 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
           </select>
         </div>
         <div class="form-row"><label class="form-lbl" for="f-message">YOUR MESSAGE</label><textarea class="rpg-inp" id="f-message" name="message" placeholder="Tell me about your channel, your vision, what you're building..."></textarea></div>
-        <button type="submit" class="submit-btn">💾 &nbsp; SEND MESSAGE</button>
+        <button type="submit" class="submit-btn">📮 &nbsp; SEND LETTER</button>
       </form>
-      <div id="form-success" style="display:none;text-align:center;padding:24px;font-family:'VT323',monospace;font-size:22px;color:var(--green);line-height:1.6;">✓ MESSAGE SAVED!<br><span style="font-size:18px;color:var(--text-mid);">Bruno will respond within 24–48 hours.</span></div>
+      <div id="form-success" style="display:none;text-align:center;padding:24px;font-family:'VT323',monospace;font-size:22px;color:var(--green);line-height:1.6;">📬 LETTER DELIVERED!<br><span style="font-size:18px;color:var(--text-mid);">Bruno will respond within 24–48 hours.</span></div>
       <div class="divider"></div>
       <div style="font-family:'Press Start 2P',monospace;font-size:clamp(6px,0.8vw,7px);color:var(--text-dim);text-align:center;margin-bottom:12px;letter-spacing:1px;">OR FIND ME HERE</div>
       <div class="social-row">
@@ -1347,7 +1354,7 @@ function portalClick(targetScreen, portalEl) {
 const DIALOGUES = [
   { name:'SYSTEM',  portrait:'🎮', text:"Welcome, traveler. You've entered the world of Bruno Antonio — Narrative Architect. Select a building above." },
   { name:'BRUNO',   portrait:'🎬', text:"I build stories other people miss. Former MrBeast. Lead editor at Jordan Matter. Building something bigger." },
-  { name:'SYSTEM',  portrait:'🎮', text:"STATS → backstory.  QUESTS → my work.  GUILD → services.  SAVE POINT → let's connect." },
+  { name:'SYSTEM',  portrait:'🎮', text:"STATS → backstory.  QUESTS → my work.  GUILD → services.  POST OFFICE → let's connect." },
   { name:'BRUNO',   portrait:'🎬', text:"Walk up to any building and enter. Every quest in the log is real — click to expand the story." },
 ];
 let dlgIdx=0, isTyping=false, typeTimer=null, fullText='';
