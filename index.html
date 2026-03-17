@@ -1327,6 +1327,22 @@ function advanceDlg(){ if(isTyping){clearInterval(typeTimer);document.getElement
 function initHub(){ dlgIdx=0; document.getElementById('dlg-more').style.opacity='0'; showDlg(0); }
 document.getElementById('hub-dlg').addEventListener('click', advanceDlg);
 
+/* ---- Map click-to-move ---- */
+document.getElementById('hub-map').addEventListener('click', function(e) {
+  if (e.target.closest('.portal')) return; // portals handle their own movement
+  if (isMoving) return;
+  const map = document.getElementById('hub-map');
+  const player = document.getElementById('hub-player');
+  const mapRect = map.getBoundingClientRect();
+  const tx = (e.clientX - mapRect.left) / mapRect.width * 100;
+  const ty = (e.clientY - mapRect.top) / mapRect.height * 100;
+  player.classList.add('walking');
+  player.style.transition = 'left 0.45s cubic-bezier(0.4,0,0.6,1), top 0.45s cubic-bezier(0.4,0,0.6,1)';
+  player.style.left = tx + '%';
+  player.style.top  = ty + '%';
+  setTimeout(() => { player.classList.remove('walking'); }, 450);
+});
+
 /* ---- Stats bars ---- */
 function initStats(){
   document.querySelectorAll('#s-stats .stat-fill').forEach(b=>{
