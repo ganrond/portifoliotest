@@ -753,7 +753,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 <!-- ================================================================
      S1 — TITLE
 ================================================================ -->
-<div class="screen active" id="s-title" onclick="startGame()">
+<div class="screen active" id="s-title">
   <div style="position:relative;z-index:2;">
     <div class="title-frame">
       <div class="tf-bc"></div>
@@ -1127,18 +1127,18 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       </div>
       <form id="contact-form" onsubmit="handleSubmit(event)">
         <div class="form-2col">
-          <div><label class="form-lbl">PLAYER NAME</label><input class="rpg-inp" type="text" name="name" placeholder="Your name..." required></div>
-          <div><label class="form-lbl">YOUR EMAIL</label><input class="rpg-inp" type="email" name="email" placeholder="your@email.com" required></div>
+          <div><label class="form-lbl" for="f-name">PLAYER NAME</label><input class="rpg-inp" id="f-name" type="text" name="name" placeholder="Your name..." required></div>
+          <div><label class="form-lbl" for="f-email">YOUR EMAIL</label><input class="rpg-inp" id="f-email" type="email" name="email" placeholder="your@email.com" required></div>
         </div>
-        <div class="form-row"><label class="form-lbl">QUEST TYPE</label>
-          <select class="rpg-inp" name="type">
+        <div class="form-row"><label class="form-lbl" for="f-type">QUEST TYPE</label>
+          <select class="rpg-inp" id="f-type" name="type">
             <option value="per-video">Creative Direction — Per Video ($3K–$6K)</option>
             <option value="retainer">Monthly Retainer ($5K–$8K/mo)</option>
             <option value="partnership">Full Creative Partnership</option>
             <option value="collab">Collaboration / Other</option>
           </select>
         </div>
-        <div class="form-row"><label class="form-lbl">YOUR MESSAGE</label><textarea class="rpg-inp" name="message" placeholder="Tell me about your channel, your vision, what you're building..."></textarea></div>
+        <div class="form-row"><label class="form-lbl" for="f-message">YOUR MESSAGE</label><textarea class="rpg-inp" id="f-message" name="message" placeholder="Tell me about your channel, your vision, what you're building..."></textarea></div>
         <button type="submit" class="submit-btn">💾 &nbsp; SEND MESSAGE</button>
       </form>
       <div id="form-success" style="display:none;text-align:center;padding:24px;font-family:'VT323',monospace;font-size:22px;color:var(--green);line-height:1.6;">✓ MESSAGE SAVED!<br><span style="font-size:18px;color:var(--text-mid);">Bruno will respond within 24–48 hours.</span></div>
