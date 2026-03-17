@@ -865,43 +865,43 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       <!-- === TERRAIN — Trees & Vegetation === -->
 
       <!-- Top-left forest cluster -->
-      <div id="it-tree1" class="t-tree"  style="left:2%;top:20%;" onclick="tryInteract(event,'it-tree1')"><div class="t-tree-top" style="width:28px;height:34px;"></div><div class="t-tree-trunk" style="width:6px;height:10px;"></div></div>
-      <div id="it-tree2" class="t-pine"  style="left:6%;top:17%;" onclick="tryInteract(event,'it-tree2')"><div class="t-pine-top" style="width:22px;height:28px;"></div><div class="t-pine-mid" style="width:28px;height:18px;"></div><div class="t-pine-trunk" style="width:5px;height:8px;"></div></div>
-      <div class="t-tree"  style="left:1%;top:36%;"><div class="t-tree-top" style="width:22px;height:28px;"></div><div class="t-tree-trunk" style="width:5px;height:8px;"></div></div>
-      <div id="it-bush1" class="t-bush"  style="left:8%;top:44%;width:20px;height:14px;" onclick="tryInteract(event,'it-bush1')"></div>
-      <div class="t-bush"  style="left:4%;top:50%;width:16px;height:12px;"></div>
+      <div id="it-tree1" class="t-tree" style="left:2%;top:20%;"  onclick="tryInteract(event,'it-tree1')"><div class="t-tree-top" style="width:28px;height:34px;"></div><div class="t-tree-trunk" style="width:6px;height:10px;"></div></div>
+      <div id="it-tree2" class="t-pine" style="left:6%;top:17%;"  onclick="tryInteract(event,'it-tree2')"><div class="t-pine-top" style="width:22px;height:28px;"></div><div class="t-pine-mid" style="width:28px;height:18px;"></div><div class="t-pine-trunk" style="width:5px;height:8px;"></div></div>
+      <div id="it-tree4" class="t-tree" style="left:1%;top:36%;"  onclick="tryInteract(event,'it-tree4')"><div class="t-tree-top" style="width:22px;height:28px;"></div><div class="t-tree-trunk" style="width:5px;height:8px;"></div></div>
+      <div id="it-bush1" class="t-bush" style="left:8%;top:44%;width:20px;height:14px;" onclick="tryInteract(event,'it-bush1')"></div>
+      <div id="it-bush2" class="t-bush" style="left:4%;top:50%;width:16px;height:12px;" onclick="tryInteract(event,'it-bush2')"></div>
       <div class="t-grass" style="left:10%;top:55%;">🌿</div>
       <div id="it-flower1" class="t-flower" style="left:12%;top:48%;--fd:0.3s;" onclick="tryInteract(event,'it-flower1')">🌸</div>
-      <div class="t-flower" style="left:5%;top:58%;--fd:1.1s;">🌼</div>
+      <div id="it-flower2" class="t-flower" style="left:5%;top:58%;--fd:1.1s;"  onclick="tryInteract(event,'it-flower2')">🌼</div>
 
       <!-- Top-right forest cluster -->
-      <div id="it-tree3" class="t-tree"  style="right:2%;top:20%;" onclick="tryInteract(event,'it-tree3')"><div class="t-tree-top" style="width:26px;height:32px;"></div><div class="t-tree-trunk" style="width:6px;height:9px;"></div></div>
-      <div class="t-pine"  style="right:7%;top:16%;"><div class="t-pine-top" style="width:20px;height:26px;"></div><div class="t-pine-mid" style="width:26px;height:16px;"></div><div class="t-pine-trunk" style="width:5px;height:8px;"></div></div>
-      <div class="t-tree"  style="right:1%;top:37%;"><div class="t-tree-top" style="width:24px;height:30px;"></div><div class="t-tree-trunk" style="width:5px;height:9px;"></div></div>
-      <div class="t-bush"  style="right:8%;top:46%;width:18px;height:13px;"></div>
+      <div id="it-tree3" class="t-tree" style="right:2%;top:20%;" onclick="tryInteract(event,'it-tree3')"><div class="t-tree-top" style="width:26px;height:32px;"></div><div class="t-tree-trunk" style="width:6px;height:9px;"></div></div>
+      <div id="it-pine1" class="t-pine" style="right:7%;top:16%;" onclick="tryInteract(event,'it-pine1')"><div class="t-pine-top" style="width:20px;height:26px;"></div><div class="t-pine-mid" style="width:26px;height:16px;"></div><div class="t-pine-trunk" style="width:5px;height:8px;"></div></div>
+      <div id="it-tree5" class="t-tree" style="right:1%;top:37%;" onclick="tryInteract(event,'it-tree5')"><div class="t-tree-top" style="width:24px;height:30px;"></div><div class="t-tree-trunk" style="width:5px;height:9px;"></div></div>
+      <div id="it-bush3" class="t-bush" style="right:8%;top:46%;width:18px;height:13px;" onclick="tryInteract(event,'it-bush3')"></div>
       <div class="t-grass" style="right:11%;top:54%;">🌿</div>
-      <div class="t-flower" style="right:13%;top:42%;--fd:0.7s;">🌺</div>
+      <div id="it-flower3" class="t-flower" style="right:13%;top:42%;--fd:0.7s;" onclick="tryInteract(event,'it-flower3')">🌺</div>
 
       <!-- Bottom-left corner -->
-      <div class="t-tree"  style="left:1%;bottom:4%;"><div class="t-tree-top" style="width:24px;height:30px;"></div><div class="t-tree-trunk" style="width:5px;height:8px;"></div></div>
-      <div class="t-pine"  style="left:5%;bottom:6%;"><div class="t-pine-top" style="width:18px;height:24px;"></div><div class="t-pine-mid" style="width:24px;height:15px;"></div><div class="t-pine-trunk" style="width:4px;height:7px;"></div></div>
-      <div class="t-bush"  style="left:10%;bottom:8%;width:22px;height:14px;"></div>
-      <div class="t-flower" style="left:14%;bottom:10%;--fd:0.5s;">🌸</div>
-      <div class="t-flower" style="left:7%;bottom:12%;--fd:1.4s;">🌼</div>
+      <div id="it-tree6" class="t-tree" style="left:1%;bottom:4%;"  onclick="tryInteract(event,'it-tree6')"><div class="t-tree-top" style="width:24px;height:30px;"></div><div class="t-tree-trunk" style="width:5px;height:8px;"></div></div>
+      <div id="it-pine2" class="t-pine" style="left:5%;bottom:6%;"  onclick="tryInteract(event,'it-pine2')"><div class="t-pine-top" style="width:18px;height:24px;"></div><div class="t-pine-mid" style="width:24px;height:15px;"></div><div class="t-pine-trunk" style="width:4px;height:7px;"></div></div>
+      <div id="it-bush4" class="t-bush" style="left:10%;bottom:8%;width:22px;height:14px;" onclick="tryInteract(event,'it-bush4')"></div>
+      <div id="it-flower4" class="t-flower" style="left:14%;bottom:10%;--fd:0.5s;" onclick="tryInteract(event,'it-flower4')">🌸</div>
+      <div id="it-flower5" class="t-flower" style="left:7%;bottom:12%;--fd:1.4s;"  onclick="tryInteract(event,'it-flower5')">🌼</div>
 
       <!-- Bottom-right corner -->
-      <div class="t-tree"  style="right:2%;bottom:5%;"><div class="t-tree-top" style="width:26px;height:32px;"></div><div class="t-tree-trunk" style="width:6px;height:9px;"></div></div>
-      <div class="t-pine"  style="right:6%;bottom:7%;"><div class="t-pine-top" style="width:20px;height:26px;"></div><div class="t-pine-mid" style="width:26px;height:16px;"></div><div class="t-pine-trunk" style="width:5px;height:7px;"></div></div>
-      <div class="t-flower" style="right:11%;bottom:9%;--fd:0.9s;">🌺</div>
+      <div id="it-tree7" class="t-tree" style="right:2%;bottom:5%;" onclick="tryInteract(event,'it-tree7')"><div class="t-tree-top" style="width:26px;height:32px;"></div><div class="t-tree-trunk" style="width:6px;height:9px;"></div></div>
+      <div id="it-pine3" class="t-pine" style="right:6%;bottom:7%;" onclick="tryInteract(event,'it-pine3')"><div class="t-pine-top" style="width:20px;height:26px;"></div><div class="t-pine-mid" style="width:26px;height:16px;"></div><div class="t-pine-trunk" style="width:5px;height:7px;"></div></div>
+      <div id="it-flower6" class="t-flower" style="right:11%;bottom:9%;--fd:0.9s;" onclick="tryInteract(event,'it-flower6')">🌺</div>
       <div class="t-grass" style="right:14%;bottom:13%;">🌿</div>
 
       <!-- Mid-left rocks -->
-      <div id="it-rock1" class="t-rock" style="left:16%;top:60%;width:10px;height:7px;" onclick="tryInteract(event,'it-rock1')"></div>
-      <div class="t-rock" style="left:19%;top:65%;width:7px;height:5px;"></div>
+      <div id="it-rock1" class="t-rock" style="left:16%;top:60%;width:16px;height:12px;" onclick="tryInteract(event,'it-rock1')"></div>
+      <div id="it-rock2" class="t-rock" style="left:19%;top:65%;width:13px;height:10px;" onclick="tryInteract(event,'it-rock2')"></div>
 
       <!-- Mid-right rocks -->
-      <div class="t-rock" style="right:16%;top:60%;width:9px;height:6px;"></div>
-      <div class="t-rock" style="right:20%;top:67%;width:6px;height:5px;"></div>
+      <div id="it-rock3" class="t-rock" style="right:16%;top:60%;width:15px;height:11px;" onclick="tryInteract(event,'it-rock3')"></div>
+      <div id="it-rock4" class="t-rock" style="right:20%;top:67%;width:12px;height:9px;"  onclick="tryInteract(event,'it-rock4')"></div>
 
       <!-- Pond — bottom-left area -->
       <div id="it-pond" class="t-pond" style="left:19%;bottom:14%;width:44px;height:28px;" onclick="tryInteract(event,'it-pond')">
@@ -1401,19 +1401,39 @@ const ENV_DATA = {
   'it-tree1':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
   'it-tree2':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
   'it-tree3':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
+  'it-tree4':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
+  'it-tree5':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
+  'it-tree6':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
+  'it-tree7':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
+  'it-pine1':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
+  'it-pine2':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
+  'it-pine3':  { type:'tree',   hint:'💧 WATER',  color:'#22d3ee' },
   'it-fire':   { type:'fire',   hint:'🔥 TOUCH',  color:'#fb923c' },
   'it-pond':   { type:'pond',   hint:'🏊 SWIM',   color:'#22d3ee' },
   'it-shroom': { type:'shroom', hint:'🍄 EAT',    color:'#e879f9' },
   'it-flower1':{ type:'flower', hint:'🌸 PICK',   color:'#e879f9' },
+  'it-flower2':{ type:'flower', hint:'🌼 PICK',   color:'#e879f9' },
+  'it-flower3':{ type:'flower', hint:'🌺 PICK',   color:'#e879f9' },
+  'it-flower4':{ type:'flower', hint:'🌸 PICK',   color:'#e879f9' },
+  'it-flower5':{ type:'flower', hint:'🌼 PICK',   color:'#e879f9' },
+  'it-flower6':{ type:'flower', hint:'🌺 PICK',   color:'#e879f9' },
   'it-rock1':  { type:'rock',   hint:'🪨 KICK',   color:'#a0aec0' },
+  'it-rock2':  { type:'rock',   hint:'🪨 KICK',   color:'#a0aec0' },
+  'it-rock3':  { type:'rock',   hint:'🪨 KICK',   color:'#a0aec0' },
+  'it-rock4':  { type:'rock',   hint:'🪨 KICK',   color:'#a0aec0' },
   'it-bush1':  { type:'bush',   hint:'🌿 HIDE',   color:'#10d98c' },
+  'it-bush2':  { type:'bush',   hint:'🌿 HIDE',   color:'#10d98c' },
+  'it-bush3':  { type:'bush',   hint:'🌿 HIDE',   color:'#10d98c' },
+  'it-bush4':  { type:'bush',   hint:'🌿 HIDE',   color:'#10d98c' },
 };
 const PROXIMITY_PCT = 14;
 let statusTimer = null;
 
 function tryInteract(e, id) {
+  e.stopPropagation(); // always prevent map click-to-move
   const def = ENV_DATA[id]; if (!def) return;
-  const map = document.getElementById('hub-map');
+  if (isMoving) return;
+  const map    = document.getElementById('hub-map');
   const player = document.getElementById('hub-player');
   const mapRect = map.getBoundingClientRect();
   const px = parseFloat(player.style.left) || 50;
@@ -1422,9 +1442,28 @@ function tryInteract(e, id) {
   const er = el.getBoundingClientRect();
   const ex = (er.left + er.width/2  - mapRect.left) / mapRect.width  * 100;
   const ey = (er.top  + er.height/2 - mapRect.top)  / mapRect.height * 100;
-  if (Math.sqrt((px-ex)**2 + (py-ey)**2) > PROXIMITY_PCT) return; // too far — walk there
-  e.stopPropagation();
-  doInteraction(id, def, el);
+  const dist = Math.sqrt((px-ex)**2 + (py-ey)**2);
+
+  if (dist <= PROXIMITY_PCT) {
+    doInteraction(id, def, el);
+    return;
+  }
+
+  // Walk toward element, then auto-interact on arrival
+  isMoving = true;
+  const angle = Math.atan2(py - ey, px - ex);
+  const tx = ex + Math.cos(angle) * (PROXIMITY_PCT * 0.55);
+  const ty = ey + Math.sin(angle) * (PROXIMITY_PCT * 0.55);
+  player.classList.add('walking');
+  player.style.transition = 'left 0.52s cubic-bezier(0.4,0,0.6,1), top 0.52s cubic-bezier(0.4,0,0.6,1)';
+  player.style.left = tx + '%';
+  player.style.top  = ty + '%';
+  setTimeout(() => {
+    player.classList.remove('walking');
+    isMoving = false;
+    checkProximity();
+    doInteraction(id, def, el);
+  }, 540);
 }
 
 function doInteraction(id, def, el) {
