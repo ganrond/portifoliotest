@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BRUNO ANTONIO — NARRATIVE ARCHITECT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -646,21 +646,86 @@ select.rpg-inp { appearance:none; }
 #form-success { display:none; text-align:center; padding:24px; font-family:'VT323',monospace; font-size:22px; color:var(--green); line-height:1.6; }
 
 /* ================================================================
-   RESPONSIVE
+   TOUCH DEVICES — restore real cursor, kill custom one
+================================================================ */
+@media (pointer: coarse) {
+  * { cursor: auto !important; }
+  #cursor { display: none !important; }
+}
+
+/* Remove tap flash on all interactive elements */
+*, *::before, *::after { -webkit-tap-highlight-color: transparent; }
+
+/* Minimum 44px touch targets */
+.portal        { min-height: 44px; }
+#back-btn      { min-height: 44px; padding: clamp(10px,1.5vw,14px) clamp(14px,2vw,20px); }
+.soc-a         { min-height: 44px; display: inline-flex; align-items: center; }
+.quest         { padding: 14px 0; }
+button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
+
+/* iOS safe-area insets for notched phones */
+#hub-dlg {
+  padding-bottom: calc(clamp(10px,1.5vh,16px) + env(safe-area-inset-bottom, 0px));
+}
+#back-btn {
+  top: calc(clamp(10px,2vw,16px) + env(safe-area-inset-top, 0px));
+  left: calc(clamp(10px,2vw,16px) + env(safe-area-inset-left, 0px));
+}
+
+/* ================================================================
+   RESPONSIVE — 600px
 ================================================================ */
 @media(max-width:600px) {
+  /* Stats screen */
   #s-stats { flex-direction:column; }
-  .stats-l { width:100%; }
+  .stats-l { width:100%; max-width:280px; }
   .char-frame { height:110px; max-height:110px; }
+
+  /* Contact form */
   .form-2col { grid-template-columns:1fr; }
-  .hub-map { height:clamp(260px,55vw,360px); }
-  .p-body { width:clamp(38px,9vw,46px); height:clamp(34px,8vw,42px); }
-  .p-roof { border-left-width:clamp(17px,4.5vw,22px); border-right-width:clamp(17px,4.5vw,22px); border-bottom-width:clamp(11px,3vw,15px); }
+
+  /* Hub map */
+  .hub-map { height:clamp(260px,48vw,340px); }
+  .hub-wrap { padding-bottom:clamp(100px,15vh,120px); }
+
+  /* Buildings — a touch smaller */
+  .p-body { width:clamp(36px,9vw,44px); height:clamp(32px,8vw,40px); }
+  .p-roof { border-left-width:clamp(16px,4vw,20px); border-right-width:clamp(16px,4vw,20px); border-bottom-width:clamp(10px,3vw,13px); }
+
+  /* Signs — compact but still legible */
+  .sign-arm   { width:8px; margin-top:10px; }
+  .sign-board { min-width:28px; padding:3px 5px; gap:2px; }
+  .sign-icon  { font-size:11px; }
+  .sign-label { font-size:4px; letter-spacing:0.5px; }
+
+  /* Dialogue */
+  #hub-dlg      { height:auto; min-height:88px; padding:10px 12px; gap:10px; }
+  .dlg-portrait { width:46px; height:46px; font-size:20px; flex-shrink:0; }
+  .dlg-name     { font-size:7px; }
+  .dlg-text     { font-size:clamp(15px,2.2vw,18px); }
+
+  /* Screens padding */
+  #s-quests, #s-guild, #s-contact { padding:10px; }
 }
+
+/* ================================================================
+   RESPONSIVE — 400px
+================================================================ */
 @media(max-width:400px) {
-  .hub-map { height:260px; }
-  .dlg-text { font-size:15px; }
-  .title-name { font-size:16px; letter-spacing:3px; }
+  .hub-map      { height:250px; }
+  .dlg-text     { font-size:15px; }
+  .title-name   { font-size:16px; letter-spacing:3px; }
+
+  /* Hide portrait on tiny screens */
+  .dlg-portrait { display:none; }
+
+  /* Collapse sign text — just icon */
+  .sign-label   { display:none; }
+  .sign-board   { min-width:22px; padding:3px 4px; }
+
+  /* Tighter dialogue */
+  #hub-dlg      { min-height:72px; }
+  .hub-wrap     { padding-bottom:clamp(80px,13vh,100px); }
 }
 </style>
 </head>
@@ -696,7 +761,7 @@ select.rpg-inp { appearance:none; }
       <div class="title-name">BRUNO<br>ANTONIO</div>
       <div class="title-sep"></div>
       <div class="title-class">NARRATIVE &nbsp; ARCHITECT</div>
-      <div class="press-start">◆ &nbsp; PRESS ENTER TO BEGIN &nbsp; ◆</div>
+      <div class="press-start" id="start-hint">◆ &nbsp; PRESS ENTER TO BEGIN &nbsp; ◆</div>
       <div class="cred-row">
         <div class="cred" data-label="FORMERLY AT"><span>MrBeast</span></div>
         <div class="cred" data-label="CURRENTLY AT"><span>Jordan Matter</span></div>
@@ -1272,6 +1337,14 @@ function initStats(){
 
 /* ---- Quest toggle ---- */
 function toggleQ(el){ const was=el.classList.contains('open'); document.querySelectorAll('.quest').forEach(q=>q.classList.remove('open')); if(!was)el.classList.add('open'); }
+
+/* ---- Touch device detection ---- */
+(function() {
+  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if (isTouch) {
+    document.getElementById('start-hint').textContent = '◆   TAP TO BEGIN   ◆';
+  }
+})();
 
 /* ---- Contact form ---- */
 function handleSubmit(e){
