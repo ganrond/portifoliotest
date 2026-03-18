@@ -2145,7 +2145,7 @@ function saveProgress() {
     const flowers = [...document.querySelectorAll('[data-picked="1"]')].map(el => el.id);
     const trees = {};
     document.querySelectorAll('[data-stage]').forEach(el => { if (el.dataset.stage) trees[el.id] = el.dataset.stage; });
-    localStorage.setItem(LS_KEY, JSON.stringify({
+    sessionStorage.setItem(LS_KEY, JSON.stringify({
       explored: [...exploredSet],
       flowers,
       trees,
@@ -2158,7 +2158,7 @@ function saveProgress() {
 
 function loadProgress() {
   try {
-    const raw = localStorage.getItem(LS_KEY);
+    const raw = sessionStorage.getItem(LS_KEY);
     if (!raw) return;
     const s = JSON.parse(raw);
     // Restore explored set
