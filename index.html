@@ -713,7 +713,6 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    order: 1; /* after tracker (order:0), before dialogue (order:3) */
   }
   .hub-map {
     width: 100vw;
@@ -726,10 +725,9 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   /* Nav dropdown: visible on mobile */
   #hub-nav { display: block; }
 
-  /* Tracker: top of the hub, above the map */
+  /* Tracker: static so it sits at top (first in DOM) */
   #explore-tracker {
     position: static;
-    order: 0;
     width: 100%;
     bottom: auto; top: auto; left: auto; right: auto;
     border-top: 1px solid var(--b-main);
@@ -1081,6 +1079,26 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
      S2 — HUB WORLD
 ================================================================ -->
 <div class="screen" id="s-hub">
+
+  <!-- Explorer tracker — first in DOM so it's at top on mobile (position:static) -->
+  <div id="explore-tracker">
+    <div class="tracker-header" onclick="toggleTracker()">
+      <span class="tracker-title">◆ SIDE QUEST</span>
+      <span id="tracker-progress">0 / 8</span>
+      <span id="tracker-toggle">▲</span>
+    </div>
+    <div id="tracker-body">
+      <div class="tk-item" id="tk-tree">  <span class="tk-dot">○</span> Water a tree</div>
+      <div class="tk-item" id="tk-flower"><span class="tk-dot">○</span> Pick all flowers <span id="tk-flower-ct">(0/6)</span></div>
+      <div class="tk-item" id="tk-bush">  <span class="tk-dot">○</span> Hide in a bush</div>
+      <div class="tk-item" id="tk-rock">  <span class="tk-dot">○</span> Kick a rock</div>
+      <div class="tk-item" id="tk-fire">  <span class="tk-dot">○</span> Touch the fire</div>
+      <div class="tk-item" id="tk-pond">  <span class="tk-dot">○</span> Swim in the pond</div>
+      <div class="tk-item" id="tk-shroom"><span class="tk-dot">○</span> Eat the mushroom</div>
+      <div class="tk-item" id="tk-npc">   <span class="tk-dot">○</span> Talk to the stranger</div>
+    </div>
+  </div>
+
   <div class="hub-wrap">
 
     <div class="hub-map" id="hub-map">
@@ -1328,24 +1346,6 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   </div>
   <button id="konami-btn" onclick="triggerKonami()">🗝️ ENTER THE CODE</button>
 
-  <!-- Explorer tracker -->
-  <div id="explore-tracker">
-    <div class="tracker-header" onclick="toggleTracker()">
-      <span class="tracker-title">◆ SIDE QUEST</span>
-      <span id="tracker-progress">0 / 8</span>
-      <span id="tracker-toggle">▲</span>
-    </div>
-    <div id="tracker-body">
-      <div class="tk-item" id="tk-tree">  <span class="tk-dot">○</span> Water a tree</div>
-      <div class="tk-item" id="tk-flower"><span class="tk-dot">○</span> Pick all flowers <span id="tk-flower-ct">(0/6)</span></div>
-      <div class="tk-item" id="tk-bush">  <span class="tk-dot">○</span> Hide in a bush</div>
-      <div class="tk-item" id="tk-rock">  <span class="tk-dot">○</span> Kick a rock</div>
-      <div class="tk-item" id="tk-fire">  <span class="tk-dot">○</span> Touch the fire</div>
-      <div class="tk-item" id="tk-pond">  <span class="tk-dot">○</span> Swim in the pond</div>
-      <div class="tk-item" id="tk-shroom"><span class="tk-dot">○</span> Eat the mushroom</div>
-      <div class="tk-item" id="tk-npc">   <span class="tk-dot">○</span> Talk to the stranger</div>
-    </div>
-  </div>
 </div>
 
 <!-- ================================================================
