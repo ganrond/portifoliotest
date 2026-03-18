@@ -696,73 +696,107 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
    RESPONSIVE — 600px
 ================================================================ */
 @media(max-width:600px) {
-  /* Stats screen */
-  #s-stats { flex-direction:column; }
-  .stats-l { width:100%; max-width:280px; }
-  .char-frame { height:110px; max-height:110px; }
 
-  /* Contact form */
-  .form-2col { grid-template-columns:1fr; }
+  /* ---- HUB: proper stacked column, no fixed overlap ---- */
+  #s-hub {
+    justify-content: flex-start;
+    padding-top: 0;
+    overflow: hidden;
+  }
+  .hub-wrap {
+    flex: 1;
+    min-height: 0;
+    padding-bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hub-map {
+    width: 100vw;
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+  /* Dialogue becomes part of the normal flow — no more fixed overlap */
+  #hub-dlg {
+    position: static;
+    flex-shrink: 0;
+    width: 100%;
+    height: auto;
+    min-height: 80px;
+    padding: 8px 12px;
+    gap: 10px;
+    border-top: 2px solid var(--b-main);
+  }
+  .hub-hint     { display: none; }
+  .dlg-portrait { width: 44px; height: 44px; font-size: 20px; flex-shrink: 0; }
+  .dlg-name     { font-size: 7px; }
+  .dlg-text     { font-size: clamp(16px,4vw,20px); }
 
-  /* Hub map */
-  .hub-map { height:clamp(300px,52vh,420px); }
-  .hub-wrap { padding-bottom:clamp(100px,15vh,120px); }
+  /* Konami button: float above dialogue */
+  #konami-btn {
+    position: fixed;
+    bottom: 90px;
+    right: 8px;
+    font-size: 8px;
+  }
 
-  /* Buildings — a touch smaller */
-  .p-body { width:clamp(36px,9vw,44px); height:clamp(32px,8vw,40px); }
-  .p-roof { border-left-width:clamp(16px,4vw,20px); border-right-width:clamp(16px,4vw,20px); border-bottom-width:clamp(10px,3vw,13px); }
-
-  /* Signs — compact but still legible */
-  .sign-arm   { width:8px; margin-top:10px; }
-  .sign-board { min-width:28px; padding:3px 5px; gap:2px; }
-  .sign-icon  { font-size:11px; }
-  .sign-label { font-size:4px; letter-spacing:0.5px; }
-
-  /* Dialogue */
-  #hub-dlg      { height:auto; min-height:88px; padding:10px 12px; gap:10px; }
-  .dlg-portrait { width:46px; height:46px; font-size:20px; flex-shrink:0; }
-  .dlg-name     { font-size:7px; }
-  .dlg-text     { font-size:clamp(16px,4vw,20px); }
-
-  /* Explorer tracker — move to top-right on mobile, bigger text */
+  /* Tracker: top-left overlay on the map */
   #explore-tracker {
-    left: auto; right: 8px;
-    top: 8px; bottom: auto;
-    width: clamp(160px,46vw,220px);
+    top: 8px; left: 8px;
+    right: auto; bottom: auto;
+    width: clamp(150px,44vw,210px);
   }
   .tk-item       { font-size: 8px; line-height: 1.7; }
   .tracker-title { font-size: 8px; }
   #tracker-progress { font-size: 8px; }
   #tracker-toggle   { font-size: 7px; }
-  #konami-btn { font-size: 8px; }
 
-  /* Screens padding */
-  #s-quests, #s-guild, #s-contact { padding:10px; }
+  /* Buildings — a touch smaller */
+  .p-body { width:clamp(36px,9vw,44px); height:clamp(32px,8vw,40px); }
+  .p-roof { border-left-width:clamp(16px,4vw,20px); border-right-width:clamp(16px,4vw,20px); border-bottom-width:clamp(10px,3vw,13px); }
+
+  /* Signs */
+  .sign-arm   { width:8px; margin-top:10px; }
+  .sign-board { min-width:28px; padding:3px 5px; gap:2px; }
+  .sign-icon  { font-size:11px; }
+  .sign-label { font-size:4px; letter-spacing:0.5px; }
+
+  /* ---- Content screens: start below the back button ---- */
+  #s-stats, #s-quests, #s-guild, #s-contact, #s-secret {
+    justify-content: flex-start;
+    padding-top: 52px;
+    align-items: stretch;
+  }
+  #s-stats { flex-direction: column; align-items: center; padding: 52px 10px 20px; }
+  .stats-l  { width: 100%; max-width: 280px; }
+  .stats-r  { min-width: 0; width: 100%; }
+  .char-frame { height: 110px; max-height: 110px; }
+  .form-2col  { grid-template-columns: 1fr; }
+  #s-quests, #s-guild, #s-contact, #s-secret { padding: 52px 10px 20px; }
 }
 
 /* ================================================================
    RESPONSIVE — 400px
 ================================================================ */
 @media(max-width:400px) {
-  .hub-map      { height:clamp(260px,58vw,320px); }
-  .dlg-text     { font-size:15px; }
-  .title-name   { font-size:16px; letter-spacing:3px; }
+  .dlg-text     { font-size: 15px; }
+  .title-name   { font-size: 16px; letter-spacing: 3px; }
 
   /* Hide portrait on tiny screens */
-  .dlg-portrait { display:none; }
+  .dlg-portrait { display: none; }
+  #hub-dlg      { min-height: 68px; }
 
-  /* Collapse sign text — just icon */
-  .sign-label   { display:none; }
-  .sign-board   { min-width:22px; padding:3px 4px; }
+  /* Collapse sign text — icon only */
+  .sign-label { display: none; }
+  .sign-board { min-width: 22px; padding: 3px 4px; }
 
-  /* Tighter dialogue */
-  #hub-dlg      { min-height:72px; }
-  .hub-wrap     { padding-bottom:clamp(80px,13vh,100px); }
-
-  /* Tracker — compact on tiny screens */
-  #explore-tracker { width: clamp(140px,56vw,200px); }
-  .tk-item       { font-size: 7px; }
-  .tracker-title { font-size: 7px; }
+  /* Tracker — compact */
+  #explore-tracker { width: clamp(130px,52vw,180px); }
+  .tk-item         { font-size: 7px; }
+  .tracker-title   { font-size: 7px; }
   #tracker-progress { font-size: 7px; }
 }
 
