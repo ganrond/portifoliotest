@@ -1515,6 +1515,8 @@ function initAudio() {
   masterGain = audioCtx.createGain();
   masterGain.gain.value = 1.0;
   masterGain.connect(audioCtx.destination);
+  // iOS Safari starts AudioContext suspended — resume immediately inside this gesture
+  if (audioCtx.state === 'suspended') audioCtx.resume();
   // Show mute button once audio is initialized
   document.getElementById('mute-btn').classList.add('show');
   startBGM();
@@ -1696,10 +1698,15 @@ function scheduleBGMNote() {
   bgmTimeout = setTimeout(scheduleBGMNote, durMs);
 }
 
-// Init audio on first interaction
-function ensureAudio() { initAudio(); }
-document.addEventListener('click',   ensureAudio, { once: true });
-document.addEventListener('keydown', ensureAudio, { once: true });
+// Init audio on first interaction — touchstart catches iOS before the 300ms click delay
+function ensureAudio() {
+  initAudio();
+  // iOS Safari creates AudioContext suspended; resume() must be called inside a gesture
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+document.addEventListener('touchstart', ensureAudio, { once: true, passive: true });
+document.addEventListener('click',      ensureAudio, { once: true });
+document.addEventListener('keydown',    ensureAudio, { once: true });
 
 /* ---- Canvas starfield + nebula ---- */
 (function() {
