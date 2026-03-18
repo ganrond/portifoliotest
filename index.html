@@ -2319,12 +2319,19 @@ const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0
 })();
 
 /* ---- Explorer tracker ---- */
-const _mobileQ = window.matchMedia('(max-width:600px)');
-let trackerOpen = !_mobileQ.matches;  // open on desktop, closed on mobile
 const _trackerBody   = document.getElementById('tracker-body');
 const _trackerToggle = document.getElementById('tracker-toggle');
-if (trackerOpen) _trackerBody.classList.add('open');
-_trackerToggle.textContent = trackerOpen ? '▲' : '▼';
+let trackerOpen = false;  // always start closed; open below only on desktop
+_trackerToggle.textContent = '▼';
+
+// Open by default on desktop only — check after layout is computed
+requestAnimationFrame(() => {
+  if (window.innerWidth > 600) {
+    trackerOpen = true;
+    _trackerBody.classList.add('open');
+    _trackerToggle.textContent = '▲';
+  }
+});
 
 function toggleTracker() {
   trackerOpen = !trackerOpen;
