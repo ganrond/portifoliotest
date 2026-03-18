@@ -89,8 +89,21 @@ html, body {
   background: #000; z-index: 9999;
   opacity: 0; pointer-events: none;
   transition: opacity 0.22s ease;
+  display: flex; align-items: center; justify-content: center;
 }
 #overlay.in { opacity: 1; }
+#overlay-text {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1.1vw, 11px);
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 2px;
+  text-align: center;
+  max-width: 80%;
+  line-height: 2;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+#overlay.in #overlay-text { opacity: 1; }
 
 /* ================================================================
    BACKGROUNDS
@@ -854,6 +867,23 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 .tk-dot { color: var(--text-dim); }
 #tk-flower-ct { color: var(--text-dim); }
 
+/* Notice board */
+.t-board {
+  position: absolute; display: flex; flex-direction: column;
+  align-items: center; font-size: clamp(16px,2.4vw,22px);
+  pointer-events: auto; cursor: pointer; z-index: 12;
+  filter: drop-shadow(0 0 4px rgba(245,166,35,0.4));
+  transition: transform 0.2s, filter 0.2s;
+}
+.t-board:hover { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(245,166,35,0.7)); }
+
+/* Time-of-day ambient overlay */
+#tod-overlay {
+  position: absolute; inset: 0; z-index: 6;
+  pointer-events: none; border-radius: inherit;
+  transition: background 2s ease;
+}
+
 /* Konami unlock button */
 #konami-btn {
   display: none; position: absolute; bottom: 8px; right: 8px; z-index: 50;
@@ -941,7 +971,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 <canvas id="bg-canvas"></canvas>
 <div id="scanlines"></div>
 <div id="vignette"></div>
-<div id="overlay"></div>
+<div id="overlay"><div id="overlay-text"></div></div>
 <button id="back-btn" onclick="goBack()">◄ BACK</button>
 <button id="mute-btn" onclick="toggleMute()">🔊</button>
 <div id="achievement-badge">★ 100% EXPLORED ★</div>
@@ -1063,6 +1093,9 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
         <div class="pond-lily" style="width:5px;height:5px;top:14px;left:22px;"></div>
       </div>
 
+      <!-- Notice board — hiring post -->
+      <div id="it-board" class="t-board" style="left:58%;top:62%;" onclick="tryInteract(event,'it-board')">📋</div>
+
       <!-- NPC — the mysterious stranger -->
       <div id="it-npc" class="npc-char" onclick="tryInteract(event,'it-npc')">
         <div class="npc-sprite">🧙</div>
@@ -1179,6 +1212,9 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
           <div class="p-shadow"></div>
         </div>
       </div>
+
+      <!-- Time-of-day ambient overlay -->
+      <div id="tod-overlay"></div>
 
       <!-- Player character — "YOU" -->
       <div id="hub-player">
@@ -1538,6 +1574,22 @@ function sfxPortal() {
   notes.forEach((freq, i) => playTone(freq, 'square', 0.08, t + i * 0.1, 0.14));
 }
 
+function sfxStep() {
+  if (!audioCtx) return;
+  const t = audioCtx.currentTime;
+  playTone(160, 'square', 0.028, t, 0.035);
+}
+
+let _footstepInterval = null;
+function startFootsteps() {
+  if (_footstepInterval) return;
+  sfxStep();
+  _footstepInterval = setInterval(sfxStep, 210);
+}
+function stopFootsteps() {
+  if (_footstepInterval) { clearInterval(_footstepInterval); _footstepInterval = null; }
+}
+
 function sfxAchievement() {
   if (!audioCtx) return;
   const t = audioCtx.currentTime;
@@ -1656,9 +1708,19 @@ document.addEventListener('keydown', ensureAudio, { once: true });
 let CUR_SCREEN = 's-title';
 const HIST = [];
 
+const PORTAL_FLAVOR = {
+  's-stats':   '[ ENTERING: THE ARCHIVE ]\nOrigins. Backstory. The path that led here.',
+  's-quests':  '[ ENTERING: THE CHRONICLE ]\n500M+ views. Real stories. Real stakes.',
+  's-guild':   '[ ENTERING: THE GUILD HALL ]\nSkills. Services. What Bruno brings to the table.',
+  's-contact': '[ ENTERING: THE POST OFFICE ]\nGot a story to tell? Start here.',
+  's-secret':  '[ ACCESS GRANTED ]\nNot many reach this place...',
+};
+
 function goTo(id) {
   if (id === CUR_SCREEN) return;
   const ov = document.getElementById('overlay');
+  const ovText = document.getElementById('overlay-text');
+  ovText.textContent = PORTAL_FLAVOR[id] || '';
   ov.classList.add('in');
   setTimeout(() => {
     document.getElementById(CUR_SCREEN).classList.remove('active');
@@ -1742,6 +1804,7 @@ function portalClick(targetScreen, portalEl) {
 
   // Switch sprite to walking animation
   player.classList.add('walking');
+  startFootsteps();
 
   // Apply movement transition
   player.style.transition = 'left 0.55s cubic-bezier(0.4,0,0.6,1), top 0.55s cubic-bezier(0.4,0,0.6,1)';
@@ -1751,6 +1814,7 @@ function portalClick(targetScreen, portalEl) {
   // After walking, scale into the door
   setTimeout(() => {
     player.classList.remove('walking');
+    stopFootsteps();
     sprite.style.transition = 'transform 0.22s ease-in, opacity 0.22s ease-in';
     sprite.style.transform  = 'scale(0) translateY(-8px)';
     sprite.style.opacity    = '0';
@@ -1852,11 +1916,22 @@ function advanceDlg() {
   showDlg(dlgIdx);
 }
 
+function initTimeOfDay() {
+  const h = new Date().getHours();
+  let bg = 'transparent';
+  if      (h >= 5  && h < 8)  bg = 'rgba(255,180,80,0.07)';   // dawn — warm amber
+  else if (h >= 8  && h < 17) bg = 'transparent';               // day — clean
+  else if (h >= 17 && h < 20) bg = 'rgba(220,90,30,0.08)';     // dusk — orange-red
+  else                         bg = 'rgba(20,10,80,0.14)';      // night — deep blue
+  document.getElementById('tod-overlay').style.background = bg;
+}
+
 function initHub(){
   dlgIdx=0;
   document.getElementById('dlg-more').style.opacity='0';
   showDlg(0);
   updateTracker();
+  initTimeOfDay();
 }
 document.getElementById('hub-dlg').addEventListener('click', advanceDlg);
 
@@ -1870,10 +1945,11 @@ document.getElementById('hub-map').addEventListener('click', function(e) {
   const tx = (e.clientX - mapRect.left) / mapRect.width * 100;
   const ty = (e.clientY - mapRect.top) / mapRect.height * 100;
   player.classList.add('walking');
+  startFootsteps();
   player.style.transition = 'left 0.45s cubic-bezier(0.4,0,0.6,1), top 0.45s cubic-bezier(0.4,0,0.6,1)';
   player.style.left = tx + '%';
   player.style.top  = ty + '%';
-  setTimeout(() => { player.classList.remove('walking'); checkProximity(); }, 450);
+  setTimeout(() => { player.classList.remove('walking'); stopFootsteps(); checkProximity(); }, 450);
 });
 
 /* ---- Stats bars ---- */
@@ -1919,6 +1995,7 @@ const ENV_DATA = {
   'it-bush3':  { type:'bush',   hint:'🌿 HIDE',   color:'#10d98c' },
   'it-bush4':  { type:'bush',   hint:'🌿 HIDE',   color:'#10d98c' },
   'it-npc':    { type:'npc',    hint:'💬 TALK',   color:'#f59e0b' },
+  'it-board':  { type:'board',  hint:'📋 READ',   color:'#f5a623' },
 };
 const PROXIMITY_PCT = 14;
 
@@ -1982,11 +2059,13 @@ function tryInteract(e, id) {
   const tx = ex + Math.cos(angle) * (PROXIMITY_PCT * 0.55);
   const ty = ey + Math.sin(angle) * (PROXIMITY_PCT * 0.55);
   player.classList.add('walking');
+  startFootsteps();
   player.style.transition = 'left 0.52s cubic-bezier(0.4,0,0.6,1), top 0.52s cubic-bezier(0.4,0,0.6,1)';
   player.style.left = tx + '%';
   player.style.top  = ty + '%';
   setTimeout(() => {
     player.classList.remove('walking');
+    stopFootsteps();
     isMoving = false;
     checkProximity();
     doInteraction(id, def, el);
@@ -2090,6 +2169,18 @@ function doInteraction(id, def, el) {
       showEffect(er, mapRect, '🌿', 'HIDING...', def.color);
       exploredSet.add('bush');
       checkCompletion();
+      break;
+    }
+    case 'board': {
+      sfxPortal();
+      const boardLines = [
+        { name:'NOTICE BOARD', portrait:'📋', text:"OPEN QUEST: Seeking a narrative editor who understands that the story comes first, always. Strong sense of pacing, emotional timing, and the will to fight for the best cut." },
+        { name:'NOTICE BOARD', portrait:'📋', text:"Requirements: Experience telling stories at scale. Passion that shows up in the edit. Willingness to push past good and find great." },
+        { name:'NOTICE BOARD', portrait:'📋', text:"Interested? Visit the Post Office. Bruno reads every message personally." },
+      ];
+      let boardIdx = parseInt(el.dataset.boardIdx || '0');
+      showDlgObj(boardLines[boardIdx]);
+      el.dataset.boardIdx = (boardIdx + 1) % boardLines.length;
       break;
     }
     case 'npc': {
