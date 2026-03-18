@@ -743,11 +743,15 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     font-size: 8px;
   }
 
-  /* Tracker: top-left overlay on the map */
+  /* Tracker: top-left overlay, compact and scrollable when open */
   #explore-tracker {
     top: 8px; left: 8px;
     right: auto; bottom: auto;
     width: clamp(150px,44vw,210px);
+  }
+  #tracker-body {
+    max-height: 36vw;
+    overflow-y: auto;
   }
   .tk-item       { font-size: 8px; line-height: 1.7; }
   .tracker-title { font-size: 8px; }
@@ -2315,7 +2319,8 @@ const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0
 })();
 
 /* ---- Explorer tracker ---- */
-let trackerOpen = !isTouchDevice;  // collapsed by default on mobile
+const _mobileQ = window.matchMedia('(max-width:600px)');
+let trackerOpen = !_mobileQ.matches;  // collapsed by default on mobile
 if (!trackerOpen) {
   document.getElementById('tracker-body').classList.add('collapsed');
   document.getElementById('tracker-toggle').textContent = '▼';
