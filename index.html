@@ -350,6 +350,12 @@ html, body {
 /* Campfire */
 .t-fire { position:absolute; z-index:5; pointer-events:none; font-size:11px; animation:float-y 1s ease-in-out infinite; }
 
+/* Enable clicks on all interactive terrain, raise above portals */
+.t-tree[onclick],.t-pine[onclick],.t-bush[onclick],.t-flower[onclick],
+.t-rock[onclick],.t-fire,.t-shroom,.t-pond,.npc-char {
+  pointer-events:auto; cursor:pointer; z-index:12;
+}
+
 /* ---- Buildings / Portals ---- */
 .portal {
   position: absolute; z-index: 10;
@@ -793,6 +799,18 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   }
 }
 
+/* Konami unlock button */
+#konami-btn {
+  display: none; position: absolute; bottom: 8px; right: 8px; z-index: 50;
+  font-family: 'Press Start 2P', monospace; font-size: clamp(5px,0.75vw,7px);
+  background: rgba(245,166,35,0.12); color: var(--gold);
+  border: 1px solid var(--gold2); padding: 5px 10px; cursor: pointer;
+  letter-spacing: 1px; transition: background 0.15s;
+  animation: blink-soft 2s ease-in-out infinite;
+}
+#konami-btn.show { display: block; }
+#konami-btn:hover { background: rgba(245,166,35,0.35); }
+
 /* ================================================================
    NPC CHARACTER
 ================================================================ */
@@ -952,40 +970,40 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       <div id="it-tree1" class="t-tree" style="left:2%;top:20%;"  onclick="tryInteract(event,'it-tree1')"><div class="t-tree-top" style="width:28px;height:34px;"></div><div class="t-tree-trunk" style="width:6px;height:10px;"></div></div>
       <div id="it-tree2" class="t-pine" style="left:6%;top:17%;"  onclick="tryInteract(event,'it-tree2')"><div class="t-pine-top" style="width:22px;height:28px;"></div><div class="t-pine-mid" style="width:28px;height:18px;"></div><div class="t-pine-trunk" style="width:5px;height:8px;"></div></div>
       <div id="it-tree4" class="t-tree" style="left:1%;top:36%;"  onclick="tryInteract(event,'it-tree4')"><div class="t-tree-top" style="width:22px;height:28px;"></div><div class="t-tree-trunk" style="width:5px;height:8px;"></div></div>
-      <div id="it-bush1" class="t-bush" style="left:8%;top:44%;width:20px;height:14px;" onclick="tryInteract(event,'it-bush1')"></div>
-      <div id="it-bush2" class="t-bush" style="left:4%;top:50%;width:16px;height:12px;" onclick="tryInteract(event,'it-bush2')"></div>
-      <div id="it-flower1" class="t-flower" style="left:12%;top:48%;--fd:0.3s;" onclick="tryInteract(event,'it-flower1')">🌸</div>
-      <div id="it-flower2" class="t-flower" style="left:5%;top:58%;--fd:1.1s;"  onclick="tryInteract(event,'it-flower2')">🌼</div>
+      <div id="it-bush1" class="t-bush" style="left:19%;top:43%;width:20px;height:14px;" onclick="tryInteract(event,'it-bush1')"></div>
+      <div id="it-bush2" class="t-bush" style="left:17%;top:53%;width:16px;height:12px;" onclick="tryInteract(event,'it-bush2')"></div>
+      <div id="it-flower1" class="t-flower" style="left:23%;top:47%;--fd:0.3s;" onclick="tryInteract(event,'it-flower1')">🌸</div>
+      <div id="it-flower2" class="t-flower" style="left:17%;top:62%;--fd:1.1s;"  onclick="tryInteract(event,'it-flower2')">🌼</div>
 
       <!-- Top-right forest cluster -->
       <div id="it-tree3" class="t-tree" style="right:2%;top:20%;" onclick="tryInteract(event,'it-tree3')"><div class="t-tree-top" style="width:26px;height:32px;"></div><div class="t-tree-trunk" style="width:6px;height:9px;"></div></div>
       <div id="it-pine1" class="t-pine" style="right:7%;top:16%;" onclick="tryInteract(event,'it-pine1')"><div class="t-pine-top" style="width:20px;height:26px;"></div><div class="t-pine-mid" style="width:26px;height:16px;"></div><div class="t-pine-trunk" style="width:5px;height:8px;"></div></div>
       <div id="it-tree5" class="t-tree" style="right:1%;top:37%;" onclick="tryInteract(event,'it-tree5')"><div class="t-tree-top" style="width:24px;height:30px;"></div><div class="t-tree-trunk" style="width:5px;height:9px;"></div></div>
-      <div id="it-bush3" class="t-bush" style="right:8%;top:46%;width:18px;height:13px;" onclick="tryInteract(event,'it-bush3')"></div>
-      <div id="it-flower3" class="t-flower" style="right:13%;top:42%;--fd:0.7s;" onclick="tryInteract(event,'it-flower3')">🌺</div>
+      <div id="it-bush3" class="t-bush" style="right:19%;top:44%;width:18px;height:13px;" onclick="tryInteract(event,'it-bush3')"></div>
+      <div id="it-flower3" class="t-flower" style="right:23%;top:50%;--fd:0.7s;" onclick="tryInteract(event,'it-flower3')">🌺</div>
 
       <!-- Bottom-left corner -->
       <div id="it-tree6" class="t-tree" style="left:1%;bottom:4%;"  onclick="tryInteract(event,'it-tree6')"><div class="t-tree-top" style="width:24px;height:30px;"></div><div class="t-tree-trunk" style="width:5px;height:8px;"></div></div>
       <div id="it-pine2" class="t-pine" style="left:5%;bottom:6%;"  onclick="tryInteract(event,'it-pine2')"><div class="t-pine-top" style="width:18px;height:24px;"></div><div class="t-pine-mid" style="width:24px;height:15px;"></div><div class="t-pine-trunk" style="width:4px;height:7px;"></div></div>
-      <div id="it-bush4" class="t-bush" style="left:10%;bottom:8%;width:22px;height:14px;" onclick="tryInteract(event,'it-bush4')"></div>
-      <div id="it-flower4" class="t-flower" style="left:14%;bottom:10%;--fd:0.5s;" onclick="tryInteract(event,'it-flower4')">🌸</div>
-      <div id="it-flower5" class="t-flower" style="left:7%;bottom:12%;--fd:1.4s;"  onclick="tryInteract(event,'it-flower5')">🌼</div>
+      <div id="it-bush4" class="t-bush" style="left:10%;bottom:19%;width:22px;height:14px;" onclick="tryInteract(event,'it-bush4')"></div>
+      <div id="it-flower4" class="t-flower" style="left:14%;bottom:20%;--fd:0.5s;" onclick="tryInteract(event,'it-flower4')">🌸</div>
+      <div id="it-flower5" class="t-flower" style="left:7%;bottom:21%;--fd:1.4s;"  onclick="tryInteract(event,'it-flower5')">🌼</div>
 
       <!-- Bottom-right corner -->
       <div id="it-tree7" class="t-tree" style="right:2%;bottom:5%;" onclick="tryInteract(event,'it-tree7')"><div class="t-tree-top" style="width:26px;height:32px;"></div><div class="t-tree-trunk" style="width:6px;height:9px;"></div></div>
       <div id="it-pine3" class="t-pine" style="right:6%;bottom:7%;" onclick="tryInteract(event,'it-pine3')"><div class="t-pine-top" style="width:20px;height:26px;"></div><div class="t-pine-mid" style="width:26px;height:16px;"></div><div class="t-pine-trunk" style="width:5px;height:7px;"></div></div>
-      <div id="it-flower6" class="t-flower" style="right:11%;bottom:9%;--fd:0.9s;" onclick="tryInteract(event,'it-flower6')">🌺</div>
+      <div id="it-flower6" class="t-flower" style="right:11%;bottom:19%;--fd:0.9s;" onclick="tryInteract(event,'it-flower6')">🌺</div>
 
       <!-- Mid-left rocks -->
-      <div id="it-rock1" class="t-rock" style="left:16%;top:60%;width:16px;height:12px;" onclick="tryInteract(event,'it-rock1')"></div>
-      <div id="it-rock2" class="t-rock" style="left:19%;top:65%;width:13px;height:10px;" onclick="tryInteract(event,'it-rock2')"></div>
+      <div id="it-rock1" class="t-rock" style="left:24%;top:63%;width:16px;height:12px;" onclick="tryInteract(event,'it-rock1')"></div>
+      <div id="it-rock2" class="t-rock" style="left:28%;top:69%;width:13px;height:10px;" onclick="tryInteract(event,'it-rock2')"></div>
 
       <!-- Mid-right rocks -->
-      <div id="it-rock3" class="t-rock" style="right:16%;top:60%;width:15px;height:11px;" onclick="tryInteract(event,'it-rock3')"></div>
-      <div id="it-rock4" class="t-rock" style="right:20%;top:67%;width:12px;height:9px;"  onclick="tryInteract(event,'it-rock4')"></div>
+      <div id="it-rock3" class="t-rock" style="right:24%;top:63%;width:15px;height:11px;" onclick="tryInteract(event,'it-rock3')"></div>
+      <div id="it-rock4" class="t-rock" style="right:28%;top:69%;width:12px;height:9px;"  onclick="tryInteract(event,'it-rock4')"></div>
 
       <!-- Pond — bottom-left area -->
-      <div id="it-pond" class="t-pond" style="left:19%;bottom:14%;width:44px;height:28px;" onclick="tryInteract(event,'it-pond')">
+      <div id="it-pond" class="t-pond" style="left:19%;bottom:24%;width:44px;height:28px;" onclick="tryInteract(event,'it-pond')">
         <div class="pond-lily" style="width:7px;height:7px;top:6px;left:8px;"></div>
         <div class="pond-lily" style="width:5px;height:5px;top:14px;left:22px;"></div>
       </div>
@@ -997,10 +1015,10 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       </div>
 
       <!-- Campfire near guild -->
-      <div id="it-fire" class="t-fire" style="left:45%;top:32%;" onclick="tryInteract(event,'it-fire')">🔥</div>
+      <div id="it-fire" class="t-fire" style="left:42%;top:37%;" onclick="tryInteract(event,'it-fire')">🔥</div>
 
       <!-- Mushroom near pond -->
-      <div id="it-shroom" class="t-shroom" style="left:23%;bottom:10%;" onclick="tryInteract(event,'it-shroom')">
+      <div id="it-shroom" class="t-shroom" style="left:27%;bottom:22%;" onclick="tryInteract(event,'it-shroom')">
         <div class="shroom-cap" style="width:10px;height:7px;background:linear-gradient(180deg,#cc3322,#992211);"></div>
         <div class="shroom-stem" style="width:4px;height:5px;margin:0 auto;"></div>
       </div>
@@ -1127,6 +1145,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       <div class="dlg-more" id="dlg-more">▼ CLICK TO CONTINUE</div>
     </div>
   </div>
+  <button id="konami-btn" onclick="triggerKonami()">🗝️ ENTER THE CODE</button>
 </div>
 
 <!-- ================================================================
@@ -1470,11 +1489,24 @@ function sfxDlg() {
 }
 
 /* ---- Background Music ---- */
-// 16-step melody: [frequency, duration_ms]
+// Ambient RPG town theme — 4 phrases, ~18s loop, triangle wave
 const BGM_PATTERN = [
-  [330,200],[330,200],[0,100],[330,200],[0,100],[262,200],
-  [330,200],[0,100],[392,400],[0,400],[196,400],[0,200],
-  [262,300],[0,200],[196,300],[0,300]
+  // Phrase A: gentle intro
+  [262,320],[0,80],[330,260],[0,80],[392,320],[0,80],[466,260],[392,200],[0,200],
+  [330,360],[0,120],[262,260],[0,120],[330,200],[392,200],[466,360],[0,380],
+  // Phrase B: rising, hopeful
+  [523,280],[0,80],[587,240],[0,80],[659,320],[0,60],[784,260],[659,200],[0,120],
+  [587,260],[0,80],[523,260],[0,80],[466,420],[0,400],
+  // Phrase C: descending, contemplative
+  [392,220],[0,80],[330,220],[0,80],[262,320],[0,140],
+  [330,200],[0,80],[392,200],[0,80],[466,300],[0,100],[392,180],[330,260],[0,360],
+  // Interlude: sparse, atmospheric pauses
+  [0,480],[523,160],[0,420],[262,160],[0,420],
+  [392,240],[0,520],[0,300],[659,140],[0,520],[466,200],[0,500],
+  // Phrase A return — slight variation, softer resolve
+  [262,320],[0,80],[392,260],[0,60],[523,320],[0,80],[466,220],[392,180],[0,140],
+  [659,260],[523,200],[466,200],[392,200],[330,300],[0,200],
+  [262,380],[0,160],[392,260],[523,420],[0,220],[466,200],[392,200],[262,600],[0,700],
 ];
 let bgmIdx = 0;
 let bgmRunning = false;
@@ -1494,7 +1526,7 @@ function scheduleBGMNote() {
   if (!bgmRunning || !audioCtx) return;
   const [freq, durMs] = BGM_PATTERN[bgmIdx];
   if (freq > 0) {
-    playTone(freq, 'square', 0.06, audioCtx.currentTime, durMs / 1000 * 0.85);
+    playTone(freq, 'triangle', 0.055, audioCtx.currentTime, durMs / 1000 * 0.82);
   }
   bgmIdx = (bgmIdx + 1) % BGM_PATTERN.length;
   bgmTimeout = setTimeout(scheduleBGMNote, durMs);
@@ -1680,10 +1712,10 @@ const DIALOGUES = [
 // NPC dialogues — cycling through 5 entries
 const NPC_DIALOGUES = [
   { name:'STRANGER', portrait:'🧙', text:"Psst... traveler. You seem curious. Tread carefully. This world has secrets most never find." },
-  { name:'STRANGER', portrait:'🧙', text:"I've been here a long time. I've seen players come and go. The ones who explore everything... they're different." },
-  { name:'STRANGER', portrait:'🧙', text:"There is a hidden passage. Ancient arrows point the way. Up... up... down... down..." },
-  { name:'STRANGER', portrait:'🧙', text:"...Left, right, left, right... then B, then A. Press these keys in sequence. You may be surprised." },
-  { name:'STRANGER', portrait:'🧙', text:"You already know the code, don't you? Go on then. I'll be here." },
+  { name:'GANROND',  portrait:'🧙', text:"The name's Ganrond. I've wandered many worlds. This one has a curious architect — someone who builds stories others miss." },
+  { name:'GANROND',  portrait:'🧙', text:"There is a hidden passage here. Ancient arrows point the way. Up... up... down... down..." },
+  { name:'GANROND',  portrait:'🧙', text:"...Left, right, left, right... then B, then A. Type those keys in sequence — or use the button that appears." },
+  { name:'GANROND',  portrait:'🧙', text:"You already know the way, don't you? Go on then. I'll be here when you return." },
 ];
 let npcDlgIdx = 0;
 
@@ -1983,10 +2015,16 @@ function doInteraction(id, def, el) {
     case 'npc': {
       sfxNPC();
       exploredSet.add('npc');
-      // Show NPC dialogue
       showDlgObj(NPC_DIALOGUES[npcDlgIdx]);
+      // Reveal name on second talk
+      if (npcDlgIdx === 1) {
+        document.querySelector('.npc-tag').textContent = 'GANROND';
+      }
       npcDlgIdx = (npcDlgIdx + 1) % NPC_DIALOGUES.length;
-      // First time reactive
+      // Show unlock button after full code is revealed (after 4th dialogue shown)
+      if (npcDlgIdx >= 4) {
+        document.getElementById('konami-btn').classList.add('show');
+      }
       if (!reactedNPC) {
         reactedNPC = true;
         pushReactive('🎮', 'SYSTEM', "The stranger seems to know things about this world...");
@@ -2063,6 +2101,14 @@ function checkProximity() {
     document.getElementById('start-hint').textContent = '◆   TAP TO BEGIN   ◆';
   }
 })();
+
+/* ---- Konami manual trigger ---- */
+function triggerKonami() {
+  konamiSeq = [];
+  pushReactive('🎮', 'SYSTEM', "CHEAT CODE ACTIVATED. A true gamer has entered the building. 👾");
+  sfxSecret();
+  setTimeout(() => { goTo('s-secret'); }, 400);
+}
 
 /* ---- Contact form ---- */
 function handleSubmit(e){
