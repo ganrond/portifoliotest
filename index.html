@@ -697,8 +697,9 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 ================================================================ */
 @media(max-width:600px) {
 
-  /* ---- HUB: proper stacked column, no fixed overlap ---- */
+  /* ---- HUB: flex column — map | tracker-bar | dialogue ---- */
   #s-hub {
+    flex-direction: column;
     justify-content: flex-start;
     padding-top: 0;
     overflow: hidden;
@@ -712,6 +713,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    order: 1;
   }
   .hub-map {
     width: 100vw;
@@ -719,10 +721,38 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     height: auto;
     min-height: 0;
   }
-  /* Dialogue becomes part of the normal flow — no more fixed overlap */
+  .hub-hint { display: none; }
+
+  /* Tracker: pulled OUT of absolute, sits between map and dialogue */
+  #explore-tracker {
+    position: static;
+    order: 2;
+    width: 100%;
+    bottom: auto; top: auto; left: auto; right: auto;
+    border-top: 1px solid var(--b-main);
+    border-left: none; border-right: none;
+    box-shadow: none;
+    flex-shrink: 0;
+  }
+  .tracker-header { padding: 6px 12px; }
+  .tracker-title  { font-size: 7px; }
+  #tracker-progress { font-size: 7px; }
+  #tracker-toggle   { font-size: 7px; }
+  #tracker-body.open {
+    max-height: 28vw;
+    overflow-y: auto;
+    padding: 6px 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+  .tk-item { font-size: 7px; line-height: 1.5; width: 46%; }
+
+  /* Dialogue: static, below tracker */
   #hub-dlg {
     position: static;
     flex-shrink: 0;
+    order: 3;
     width: 100%;
     height: auto;
     min-height: 80px;
@@ -730,35 +760,14 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     gap: 10px;
     border-top: 2px solid var(--b-main);
   }
-  .hub-hint     { display: none; }
   .dlg-portrait { width: 44px; height: 44px; font-size: 20px; flex-shrink: 0; }
   .dlg-name     { font-size: 7px; }
   .dlg-text     { font-size: clamp(16px,4vw,20px); }
 
-  /* Konami button: float above dialogue */
-  #konami-btn {
-    position: fixed;
-    bottom: 90px;
-    right: 8px;
-    font-size: 8px;
-  }
+  /* Konami button above dialogue */
+  #konami-btn { position: fixed; bottom: 90px; right: 8px; font-size: 8px; }
 
-  /* Tracker: top-left overlay, compact and scrollable when open */
-  #explore-tracker {
-    top: 8px; left: 8px;
-    right: auto; bottom: auto;
-    width: clamp(150px,44vw,210px);
-  }
-  #tracker-body.open {
-    max-height: 34vw;
-    overflow-y: auto;
-  }
-  .tk-item       { font-size: 8px; line-height: 1.7; }
-  .tracker-title { font-size: 8px; }
-  #tracker-progress { font-size: 8px; }
-  #tracker-toggle   { font-size: 7px; }
-
-  /* Buildings — a touch smaller */
+  /* Buildings */
   .p-body { width:clamp(36px,9vw,44px); height:clamp(32px,8vw,40px); }
   .p-roof { border-left-width:clamp(16px,4vw,20px); border-right-width:clamp(16px,4vw,20px); border-bottom-width:clamp(10px,3vw,13px); }
 
