@@ -740,17 +740,13 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   /* Nav dropdown: visible on mobile */
   #hub-nav { display: block; }
 
-  /* Tracker — fixed-height header; items OVERLAY the map when open */
-  #explore-tracker { position: relative; }
-  .tracker-header   { padding: 6px 12px; height: 36px; }
+  /* Tracker — fixed-height header, body expands in flow when open */
+  .tracker-header   { padding: 6px 12px; }
   .tracker-title    { font-size: 7px; }
   #tracker-progress { font-size: 7px; }
   #tracker-toggle   { font-size: 7px; }
   #tracker-body.open {
-    position: absolute; top: 100%; left: 0; right: 0; z-index: 200;
-    background: rgba(3,3,16,0.97);
-    border-bottom: 1px solid var(--b-main);
-    max-height: 40vw; overflow-y: auto;
+    max-height: 35vw; overflow-y: auto;
     padding: 6px 12px;
     flex-direction: row; flex-wrap: wrap;
     gap: 4px 10px;
