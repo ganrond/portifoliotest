@@ -799,6 +799,42 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   }
 }
 
+/* Explorer achievement tracker */
+#explore-tracker {
+  position: absolute; left: clamp(8px,2vw,16px); bottom: clamp(110px,18vh,140px);
+  z-index: 50; width: clamp(140px,20vw,180px);
+  background: rgba(3,3,16,0.88); border: 1px solid var(--b-main);
+  box-shadow: 0 0 12px var(--b-glow), inset 0 0 6px rgba(0,0,0,0.5);
+}
+.tracker-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 8px; cursor: pointer; border-bottom: 1px solid var(--b-main);
+  gap: 4px;
+}
+.tracker-title {
+  font-family: 'Press Start 2P', monospace; font-size: clamp(4px,0.65vw,6px);
+  color: var(--gold); letter-spacing: 1px; text-shadow: 0 0 6px var(--gold2);
+}
+#tracker-progress {
+  font-family: 'Press Start 2P', monospace; font-size: clamp(4px,0.65vw,6px);
+  color: var(--text-mid); margin-left: auto; margin-right: 6px;
+}
+#tracker-toggle {
+  font-family: 'Press Start 2P', monospace; font-size: clamp(4px,0.55vw,5px);
+  color: var(--text-dim);
+}
+#tracker-body { padding: 6px 8px; display: flex; flex-direction: column; gap: 4px; }
+#tracker-body.collapsed { display: none; }
+.tk-item {
+  font-family: 'Press Start 2P', monospace; font-size: clamp(4px,0.6vw,5.5px);
+  color: var(--text-dim); letter-spacing: 0.5px; line-height: 1.4;
+  transition: color 0.3s;
+}
+.tk-item.done { color: var(--green); }
+.tk-item.done .tk-dot { color: var(--green); }
+.tk-dot { color: var(--text-dim); }
+#tk-flower-ct { color: var(--text-dim); }
+
 /* Konami unlock button */
 #konami-btn {
   display: none; position: absolute; bottom: 8px; right: 8px; z-index: 50;
@@ -1146,6 +1182,25 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     </div>
   </div>
   <button id="konami-btn" onclick="triggerKonami()">🗝️ ENTER THE CODE</button>
+
+  <!-- Explorer tracker -->
+  <div id="explore-tracker">
+    <div class="tracker-header" onclick="toggleTracker()">
+      <span class="tracker-title">◆ SIDE QUEST</span>
+      <span id="tracker-progress">0 / 8</span>
+      <span id="tracker-toggle">▲</span>
+    </div>
+    <div id="tracker-body">
+      <div class="tk-item" id="tk-tree">  <span class="tk-dot">○</span> Water a tree</div>
+      <div class="tk-item" id="tk-flower"><span class="tk-dot">○</span> Pick all flowers <span id="tk-flower-ct">(0/6)</span></div>
+      <div class="tk-item" id="tk-bush">  <span class="tk-dot">○</span> Hide in a bush</div>
+      <div class="tk-item" id="tk-rock">  <span class="tk-dot">○</span> Kick a rock</div>
+      <div class="tk-item" id="tk-fire">  <span class="tk-dot">○</span> Touch the fire</div>
+      <div class="tk-item" id="tk-pond">  <span class="tk-dot">○</span> Swim in the pond</div>
+      <div class="tk-item" id="tk-shroom"><span class="tk-dot">○</span> Eat the mushroom</div>
+      <div class="tk-item" id="tk-npc">   <span class="tk-dot">○</span> Talk to the stranger</div>
+    </div>
+  </div>
 </div>
 
 <!-- ================================================================
@@ -1778,6 +1833,7 @@ function initHub(){
   dlgIdx=0;
   document.getElementById('dlg-more').style.opacity='0';
   showDlg(0);
+  updateTracker();
 }
 document.getElementById('hub-dlg').addEventListener('click', advanceDlg);
 
@@ -1854,6 +1910,7 @@ let reactedNPC    = false;
 let reactedAll6   = false;
 
 function checkCompletion() {
+  updateTracker();
   if (completionShown) return;
   if (exploredSet.size >= 8) {
     completionShown = true;
@@ -2101,6 +2158,49 @@ const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0
     document.getElementById('start-hint').textContent = '◆   TAP TO BEGIN   ◆';
   }
 })();
+
+/* ---- Explorer tracker ---- */
+let trackerOpen = true;
+
+function toggleTracker() {
+  trackerOpen = !trackerOpen;
+  document.getElementById('tracker-body').classList.toggle('collapsed', !trackerOpen);
+  document.getElementById('tracker-toggle').textContent = trackerOpen ? '▲' : '▼';
+}
+
+function updateTracker() {
+  const map = {
+    tree:'tk-tree', flower:'tk-flower', bush:'tk-bush', rock:'tk-rock',
+    fire:'tk-fire', pond:'tk-pond', shroom:'tk-shroom', npc:'tk-npc'
+  };
+  let done = 0;
+  for (const [key, elId] of Object.entries(map)) {
+    const el = document.getElementById(elId); if (!el) continue;
+    if (exploredSet.has(key)) {
+      el.classList.add('done');
+      el.querySelector('.tk-dot').textContent = '✓';
+      done++;
+    }
+  }
+  // Flower count
+  const picked = document.querySelectorAll('[data-picked="1"]').length;
+  const flowerCt = document.getElementById('tk-flower-ct');
+  if (flowerCt) flowerCt.textContent = `(${picked}/6)`;
+
+  // Progress
+  document.getElementById('tracker-progress').textContent = `${done} / 8`;
+
+  // All done: update title
+  if (done >= 8) {
+    document.querySelector('.tracker-title').textContent = '✓ COMPLETED';
+  }
+
+  // Update NPC label once name is revealed
+  const npcEl = document.getElementById('tk-npc');
+  if (npcEl && npcDlgIdx > 1) {
+    npcEl.innerHTML = npcEl.innerHTML.replace('the stranger', 'Ganrond');
+  }
+}
 
 /* ---- Konami manual trigger ---- */
 function triggerKonami() {
