@@ -2021,8 +2021,8 @@ function doInteraction(id, def, el) {
         document.querySelector('.npc-tag').textContent = 'GANROND';
       }
       npcDlgIdx = (npcDlgIdx + 1) % NPC_DIALOGUES.length;
-      // Show unlock button after full code is revealed (after 4th dialogue shown)
-      if (npcDlgIdx >= 4) {
+      // Show unlock button only on touch devices (desktop uses keyboard)
+      if (npcDlgIdx >= 4 && isTouchDevice) {
         document.getElementById('konami-btn').classList.add('show');
       }
       if (!reactedNPC) {
@@ -2095,9 +2095,9 @@ function checkProximity() {
 }
 
 /* ---- Touch device detection ---- */
+const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
 (function() {
-  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-  if (isTouch) {
+  if (isTouchDevice) {
     document.getElementById('start-hint').textContent = '◆   TAP TO BEGIN   ◆';
   }
 })();
