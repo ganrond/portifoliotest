@@ -749,8 +749,8 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     right: auto; bottom: auto;
     width: clamp(150px,44vw,210px);
   }
-  #tracker-body {
-    max-height: 36vw;
+  #tracker-body.open {
+    max-height: 34vw;
     overflow-y: auto;
   }
   .tk-item       { font-size: 8px; line-height: 1.7; }
@@ -893,8 +893,8 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   font-family: 'Press Start 2P', monospace; font-size: clamp(5px,0.7vw,7px);
   color: var(--text-dim);
 }
-#tracker-body { padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
-#tracker-body.collapsed { display: none; }
+#tracker-body { padding: 8px 10px; display: none; flex-direction: column; gap: 6px; }
+#tracker-body.open { display: flex; }
 .tk-item {
   font-family: 'Press Start 2P', monospace; font-size: clamp(5px,0.72vw,7px);
   color: var(--text-dim); letter-spacing: 0.5px; line-height: 1.6;
@@ -2320,16 +2320,16 @@ const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0
 
 /* ---- Explorer tracker ---- */
 const _mobileQ = window.matchMedia('(max-width:600px)');
-let trackerOpen = !_mobileQ.matches;  // collapsed by default on mobile
-if (!trackerOpen) {
-  document.getElementById('tracker-body').classList.add('collapsed');
-  document.getElementById('tracker-toggle').textContent = '▼';
-}
+let trackerOpen = !_mobileQ.matches;  // open on desktop, closed on mobile
+const _trackerBody   = document.getElementById('tracker-body');
+const _trackerToggle = document.getElementById('tracker-toggle');
+if (trackerOpen) _trackerBody.classList.add('open');
+_trackerToggle.textContent = trackerOpen ? '▲' : '▼';
 
 function toggleTracker() {
   trackerOpen = !trackerOpen;
-  document.getElementById('tracker-body').classList.toggle('collapsed', !trackerOpen);
-  document.getElementById('tracker-toggle').textContent = trackerOpen ? '▲' : '▼';
+  _trackerBody.classList.toggle('open', trackerOpen);
+  _trackerToggle.textContent = trackerOpen ? '▲' : '▼';
 }
 
 function updateTracker() {
