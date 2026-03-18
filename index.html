@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BRUNO ANTONIO: NARRATIVE ARCHITECT</title>
+<meta name="description" content="Bruno Antonio — Narrative Architect & Video Editor. Former MrBeast editor, currently at Jordan Matter (30M+ subs). 500M+ views. Building Studio Brasil.">
+<meta property="og:title" content="Bruno Antonio: Narrative Architect">
+<meta property="og:description" content="Former MrBeast editor. Jordan Matter. 500M+ views. I find the story that's actually in the footage — even when it wasn't planned.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bruno Antonio: Narrative Architect">
+<meta name="twitter:description" content="Former MrBeast editor. Jordan Matter. 500M+ views. I find the story that's actually in the footage.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
@@ -671,7 +678,13 @@ html, body {
 .rpg-inp:focus { border-color:var(--gold); box-shadow:0 0 10px rgba(245,166,35,0.15); }
 .rpg-inp::placeholder { color:var(--text-dim); }
 textarea.rpg-inp { resize:vertical; min-height:clamp(60px,10vh,80px); }
-select.rpg-inp { appearance:none; }
+select.rpg-inp {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23f5a623'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
 
 .submit-btn { width:100%; padding:clamp(11px,2vh,14px); background:transparent; border:2px solid var(--gold); color:var(--gold); font-family:'Press Start 2P',monospace; font-size:clamp(8px,1.2vw,10px); letter-spacing:2px; text-shadow:0 0 8px var(--gold2); box-shadow:0 0 12px rgba(245,166,35,0.1); transition:background 0.18s,box-shadow 0.18s,transform 0.1s; margin-top:6px; }
 .submit-btn:hover { background:rgba(245,166,35,0.08); box-shadow:0 0 24px rgba(245,166,35,0.25); transform:scale(1.005); }
@@ -736,9 +749,6 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     min-height: 0;
   }
   .hub-hint { display: none; }
-
-  /* Nav dropdown: visible on mobile */
-  #hub-nav { display: block; }
 
   /* Tracker — fixed-height header, body expands in flow when open */
   .tracker-header   { padding: 6px 12px; }
@@ -875,7 +885,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 
 /* Explorer achievement tracker — mobile-first: static in flow by default */
 #explore-tracker {
-  position: static;
+  position: relative; /* needed so #hub-nav-drop can be positioned relative to it */
   width: 100%;
   z-index: 50;
   background: rgba(3,3,16,0.92); border: 1px solid var(--b-main);
@@ -919,34 +929,35 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 .tk-dot { color: var(--text-dim); }
 #tk-flower-ct { color: var(--text-dim); }
 
-/* Mobile fast-nav */
-#hub-nav {
-  display: none; /* shown only on mobile via media query */
-  position: absolute; top: 8px; right: 8px; z-index: 60;
-}
+/* Mobile fast-nav — lives inside tracker header, hidden on desktop */
 #hub-nav-btn {
-  font-family: 'Press Start 2P', monospace; font-size: 10px;
-  background: rgba(3,3,16,0.92); color: var(--gold);
-  border: 1px solid var(--gold2); padding: 6px 10px;
-  letter-spacing: 1px;
+  display: none; /* shown only on mobile via media query below */
+  font-family: 'Press Start 2P', monospace; font-size: 9px;
+  background: transparent; color: var(--gold);
+  border: 1px solid var(--gold2); padding: 3px 7px;
+  letter-spacing: 1px; flex-shrink: 0;
 }
 #hub-nav-drop {
   display: none;
   flex-direction: column;
-  position: absolute; top: 100%; right: 0; margin-top: 4px;
+  position: absolute; top: 100%; right: 0; width: 100%;
   background: rgba(3,3,16,0.97); border: 1px solid var(--b-main);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.7);
-  min-width: 160px; z-index: 60;
+  border-top: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+  z-index: 200;
 }
 #hub-nav-drop.open { display: flex; }
 #hub-nav-drop button {
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
+  font-family: 'Press Start 2P', monospace; font-size: 8px;
   color: var(--text-mid); background: transparent;
   border: none; border-bottom: 1px solid var(--b-outer);
-  padding: 10px 14px; text-align: left; letter-spacing: 1px;
+  padding: 12px 16px; text-align: left; letter-spacing: 1px;
 }
 #hub-nav-drop button:last-child { border-bottom: none; }
 #hub-nav-drop button:active { background: rgba(58,94,232,0.15); color: var(--text); }
+@media(max-width:699px) {
+  #hub-nav-btn { display: inline-block; }
+}
 
 /* Notice board */
 .t-board {
@@ -1032,6 +1043,56 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
    SECRET SCREEN
 ================================================================ */
 #s-secret { padding: clamp(12px,2vh,20px); }
+
+/* ================================================================
+   SKIP INTRO BUTTON
+================================================================ */
+#skip-btn {
+  position: absolute; bottom: clamp(14px,3vh,24px); right: clamp(14px,3vw,24px);
+  background: transparent; border: 1px solid var(--b-main);
+  color: var(--text-dim); font-family: 'Press Start 2P', monospace;
+  font-size: clamp(5px,0.75vw,7px); padding: 7px 14px; letter-spacing: 1px;
+  z-index: 10; transition: color 0.15s, border-color 0.15s;
+  min-height: 44px;
+}
+#skip-btn:hover { color: var(--text); border-color: var(--b-bright); }
+
+/* ================================================================
+   SCROLL FADE HINT — signals hidden content below
+================================================================ */
+.scroll-fade-wrap {
+  position: relative;
+}
+.scroll-fade-wrap::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 32px;
+  background: linear-gradient(to bottom, transparent, var(--surface));
+  pointer-events: none; z-index: 1;
+}
+
+/* ================================================================
+   ACHIEVEMENT BADGE — safe-area aware
+================================================================ */
+@media(max-width:600px) {
+  #achievement-badge {
+    bottom: calc(90px + env(safe-area-inset-bottom, 0px) + 16px);
+    font-size: 16px; padding: 10px 18px; letter-spacing: 2px;
+  }
+  #back-btn { font-size: 8px; }
+}
+
+/* ================================================================
+   PREFERS REDUCED MOTION
+================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-text { animation: none; }
+  #hub-player { transition: none !important; }
+}
 </style>
 </head>
 <body>
@@ -1064,7 +1125,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   <div style="position:relative;z-index:2;">
     <div class="title-frame">
       <div class="tf-bc"></div>
-      <div class="title-eyebrow">PORTFOLIO &nbsp;·&nbsp; 2025</div>
+      <div class="title-eyebrow">PORTFOLIO &nbsp;·&nbsp; 2026</div>
       <div class="title-name">BRUNO<br>ANTONIO</div>
       <div class="title-sep"></div>
       <div class="title-class">NARRATIVE &nbsp; ARCHITECT</div>
@@ -1075,8 +1136,9 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
         <div class="cred" data-label="BUILDING"><span>Studio Brasil 🇧🇷</span></div>
       </div>
     </div>
-    <div class="title-copy">© STUDIO BRASIL &nbsp;·&nbsp; v2.0</div>
+    <div class="title-copy">© STUDIO BRASIL &nbsp;·&nbsp; 2026</div>
   </div>
+  <button id="skip-btn" onclick="startGame()">SKIP ►</button>
 </div>
 
 <!-- ================================================================
@@ -1090,6 +1152,13 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       <span class="tracker-title">◆ SIDE QUEST</span>
       <span id="tracker-progress">0 / 8</span>
       <span id="tracker-toggle">▲</span>
+      <button id="hub-nav-btn" onclick="event.stopPropagation();toggleHubNav()">☰</button>
+    </div>
+    <div id="hub-nav-drop">
+      <button onclick="goTo('s-stats');  closeHubNav()">📊 STATS</button>
+      <button onclick="goTo('s-quests'); closeHubNav()">📜 QUESTS</button>
+      <button onclick="goTo('s-guild');  closeHubNav()">⚔️ GUILD</button>
+      <button onclick="goTo('s-contact');closeHubNav()">📮 POST OFFICE</button>
     </div>
     <div id="tracker-body">
       <div class="tk-item" id="tk-tree">  <span class="tk-dot">○</span> Water a tree</div>
@@ -1317,16 +1386,6 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       <!-- Time-of-day ambient overlay -->
       <div id="tod-overlay"></div>
 
-      <!-- Mobile fast-nav dropdown -->
-      <div id="hub-nav">
-        <button id="hub-nav-btn" onclick="toggleHubNav()">☰</button>
-        <div id="hub-nav-drop">
-          <button onclick="goTo('s-stats');  closeHubNav()">📊 STATS</button>
-          <button onclick="goTo('s-quests'); closeHubNav()">📜 QUESTS</button>
-          <button onclick="goTo('s-guild');  closeHubNav()">⚔️ GUILD</button>
-          <button onclick="goTo('s-contact');closeHubNav()">📮 POST OFFICE</button>
-        </div>
-      </div>
 
       <!-- Player character — "YOU" -->
       <div id="hub-player">
@@ -1345,7 +1404,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     <div class="dlg-content">
       <div class="dlg-name" id="dlg-name">SYSTEM</div>
       <div class="dlg-text" id="dlg-text"></div>
-      <div class="dlg-more" id="dlg-more">▼ CLICK TO CONTINUE</div>
+      <div class="dlg-more" id="dlg-more">▼ TAP TO CONTINUE</div>
     </div>
   </div>
   <button id="konami-btn" onclick="triggerKonami()">🗝️ ENTER THE CODE</button>
@@ -1386,13 +1445,13 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
         <div class="stat-row"><div class="stat-lbl">VISION</div>   <div class="stat-bg"><div class="stat-fill sf-vis" data-v="93"></div></div><div class="stat-num">93</div></div>
       </div>
       <div class="divider"></div>
-      <div class="scroll" style="max-height:clamp(120px,20vh,180px);">
+      <div class="scroll-fade-wrap"><div class="scroll" style="max-height:clamp(120px,20vh,180px);">
         <p style="font-family:'VT323',monospace;font-size:clamp(15px,2.2vw,19px);color:var(--text-mid);line-height:1.55;">
           I don't just edit. I find the story that's <span style="color:var(--text);">actually in the footage</span>, even when it wasn't what anyone planned to film.<br><br>
           On MrBeast's <span style="color:var(--gold);">"$10K/Day Challenge"</span>, I built a narrative arc where a competition pivoted mid-video into a father weighing his winnings against missing his newborn baby. <span style="color:var(--text);">That moment wasn't scripted. I found it.</span><br><br>
           Now I'm a video editor at <span style="color:var(--teal);">Jordan Matter (30M+ subscribers)</span>, building my own creative direction agency, and working toward my real mission: going back to <span style="color:var(--gold);">🇧🇷 Brazil</span> to use my platform to change people's lives.
         </p>
-      </div>
+      </div></div>
       <div class="divider"></div>
       <div>
         <div style="font-family:'Press Start 2P',monospace;font-size:clamp(5px,0.7vw,7px);color:var(--text-dim);letter-spacing:1px;margin-bottom:10px;">EQUIPPED TOOLS</div>
@@ -1415,18 +1474,18 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       <div class="bc"></div>
       <div class="win-title">QUEST LOG</div>
       <div class="chapter-label">CHAPTER I: THE BEAST CHRONICLES</div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">$10,000 EVERY DAY YOU SURVIVE IN A GROCERY STORE</span><span class="q-client">MRBEAST</span></div><div class="q-body">The quest that defined my narrative instinct. I built an arc where a competition pivoted mid-video: a father weighing his winnings against missing his newborn baby. That moment wasn't scripted. I found it.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=tnTPaLOaHz8" target="_blank">▶ WATCH</a></div></div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">7 DAYS STRANDED AT SEA</span><span class="q-client">MRBEAST</span></div><div class="q-body">Seven days. Isolation. Survival. The arc had to hold across a full week of footage while building dread, relief, and payoff at exactly the right moments. Pacing was everything.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=yhB3BgJyGl8" target="_blank">▶ WATCH</a></div></div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">$1 VS $1,000,000,000 YACHT!</span><span class="q-client">MRBEAST</span></div><div class="q-body">Does money actually buy a better experience? The real story wasn't the billion-dollar yacht. It was a group of friends discovering how rich people live the same things everyone else does. The edit had to make the viewer feel like they were in the room, finding out alongside them.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=48h57PspBec" target="_blank">▶ WATCH</a></div></div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">HYDRAULIC PRESS VS LAMBORGHINI</span><span class="q-client">MRBEAST</span></div><div class="q-body">What happens when a group of curious friends asks "what if we just crushed it?" The story isn't the press, it's the reactions. Pure energy and pacing, but driven by genuine curiosity. The edit had to make every hit feel like the first time anyone had ever thought to do this.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=h5NvTTOlOtI" target="_blank">▶ WATCH</a></div></div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">LAST TO TAKE HAND OFF JET, KEEPS IT!</span><span class="q-client">MRBEAST</span></div><div class="q-body">Endurance storytelling. The arc compresses time, identifies which contestants carry narrative weight, and makes every elimination feel significant, not just dramatic.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=kX3nB4PpJko" target="_blank">▶ WATCH</a></div></div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">$1 VS $1,000,000 HOTEL ROOM!</span><span class="q-client">MRBEAST</span></div><div class="q-body">The video that launched the concept. Before the yachts and Lamborghinis, this was where the question was first asked on camera: does money actually make the experience better? The answer, that the fun was always about the people in the room, had to land through the edit, not the script.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=iogcY_4xGjo" target="_blank">▶ WATCH</a></div></div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">I GAVE MY 100,000,000TH SUBSCRIBER AN ISLAND</span><span class="q-client">MRBEAST</span></div><div class="q-body">A milestone that had to feel massive. This edit balanced spectacle with genuine emotion, making 100 million people feel real without becoming abstract.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=2isYuQZMbdU" target="_blank">▶ WATCH</a></div></div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">I BURIED $100,000, GO FIND IT</span><span class="q-client">MRBEAST FT. LUDWIG</span></div><div class="q-body">A treasure hunt with its own pacing logic: the search had to build genuine suspense without the viewer knowing if the prize would ever be found.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=bffDpzeCgAA" target="_blank">▶ WATCH</a></div></div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">EXTREME CAMOUFLAGE TO ESCAPE SPECIAL FORCES!</span><span class="q-client">ZEALOUS</span></div><div class="q-body">My most complete production, from scratch through post. A group of friends playing hide and seek against ex-military operators running purely on instinct and training. The friends' idea was crazy. The real story was showing just how outmatched they were, making that terrifying and hilarious at the same time.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=yp8jMl7bjgo" target="_blank">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">$10,000 EVERY DAY YOU SURVIVE IN A GROCERY STORE</span><span class="q-client">MRBEAST</span></div><div class="q-body">The quest that defined my narrative instinct. I built an arc where a competition pivoted mid-video: a father weighing his winnings against missing his newborn baby. That moment wasn't scripted. I found it.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=tnTPaLOaHz8" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">7 DAYS STRANDED AT SEA</span><span class="q-client">MRBEAST</span></div><div class="q-body">Seven days. Isolation. Survival. The arc had to hold across a full week of footage while building dread, relief, and payoff at exactly the right moments. Pacing was everything.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=yhB3BgJyGl8" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">$1 VS $1,000,000,000 YACHT!</span><span class="q-client">MRBEAST</span></div><div class="q-body">Does money actually buy a better experience? The real story wasn't the billion-dollar yacht. It was a group of friends discovering how rich people live the same things everyone else does. The edit had to make the viewer feel like they were in the room, finding out alongside them.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=48h57PspBec" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">HYDRAULIC PRESS VS LAMBORGHINI</span><span class="q-client">MRBEAST</span></div><div class="q-body">What happens when a group of curious friends asks "what if we just crushed it?" The story isn't the press, it's the reactions. Pure energy and pacing, but driven by genuine curiosity. The edit had to make every hit feel like the first time anyone had ever thought to do this.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=h5NvTTOlOtI" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">LAST TO TAKE HAND OFF JET, KEEPS IT!</span><span class="q-client">MRBEAST</span></div><div class="q-body">Endurance storytelling. The arc compresses time, identifies which contestants carry narrative weight, and makes every elimination feel significant, not just dramatic.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=kX3nB4PpJko" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">$1 VS $1,000,000 HOTEL ROOM!</span><span class="q-client">MRBEAST</span></div><div class="q-body">The video that launched the concept. Before the yachts and Lamborghinis, this was where the question was first asked on camera: does money actually make the experience better? The answer, that the fun was always about the people in the room, had to land through the edit, not the script.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=iogcY_4xGjo" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">I GAVE MY 100,000,000TH SUBSCRIBER AN ISLAND</span><span class="q-client">MRBEAST</span></div><div class="q-body">A milestone that had to feel massive. This edit balanced spectacle with genuine emotion, making 100 million people feel real without becoming abstract.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=2isYuQZMbdU" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">I BURIED $100,000, GO FIND IT</span><span class="q-client">MRBEAST FT. LUDWIG</span></div><div class="q-body">A treasure hunt with its own pacing logic: the search had to build genuine suspense without the viewer knowing if the prize would ever be found.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=bffDpzeCgAA" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon done">✓</span><span class="q-title">EXTREME CAMOUFLAGE TO ESCAPE SPECIAL FORCES!</span><span class="q-client">ZEALOUS</span></div><div class="q-body">My most complete production, from scratch through post. A group of friends playing hide and seek against ex-military operators running purely on instinct and training. The friends' idea was crazy. The real story was showing just how outmatched they were, making that terrifying and hilarious at the same time.<br><br><span class="q-tag done">✓ COMPLETED</span><a class="q-watch" href="https://www.youtube.com/watch?v=yp8jMl7bjgo" target="_blank" rel="noopener noreferrer">▶ WATCH</a></div></div>
       <br>
       <div class="chapter-label act">CHAPTER II: ACTIVE MISSIONS</div>
-      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon act">►</span><span class="q-title">VIDEO EDITOR: JORDAN MATTER HQ</span><span class="q-client">30M+ SUBS</span></div><div class="q-body">Video editor at Jordan Matter's channel. Building story arcs from raw footage and keeping the quality bar the channel is known for. Significant growth since joining.<br><br><span class="q-tag act">► ACTIVE: IN PROGRESS</span><a class="q-watch" href="https://www.youtube.com/@JordanMatter" target="_blank">▶ CHANNEL</a></div></div>
+      <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon act">►</span><span class="q-title">VIDEO EDITOR: JORDAN MATTER HQ</span><span class="q-client">30M+ SUBS</span></div><div class="q-body">Video editor at Jordan Matter's channel. Building story arcs from raw footage and keeping the quality bar the channel is known for. Significant growth since joining.<br><br><span class="q-tag act">► ACTIVE: IN PROGRESS</span><a class="q-watch" href="https://www.youtube.com/@JordanMatter" target="_blank" rel="noopener noreferrer">▶ CHANNEL</a></div></div>
       <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon act">►</span><span class="q-title">FOUND THE GUILD: Creative Direction Agency</span><span class="q-client">STUDIO BRASIL</span></div><div class="q-body">Building a creative direction agency for premium YouTube channels. First client secured at $6,000/project. Team: 1 lead, 2 second editors, 2 to 3 assistants, 1 graphics. Target: $300K/year within 18 to 24 months.<br><br><span class="q-tag act">► ACTIVE: HIRING NOW</span></div></div>
       <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon act">►</span><span class="q-title">OPERATION BRASIL: YouTube Channel</span><span class="q-client">32K SUBS</span></div><div class="q-body">MrBeast-style challenge and entertainment channel in Portuguese for Brazil. First-mover at this quality level. 2 videos already filmed. Mission: use platform revenue to change people's lives in Brazil. That's the whole point.<br><br><span class="q-tag act">► ACTIVE: LAUNCHING SOON</span></div></div>
       <div class="quest" onclick="toggleQ(this)"><div class="q-head"><span class="q-icon locked">○</span><span class="q-title">THE EDITOR'S WEAPON: SaaS Product</span><span class="q-client">LOCKED</span></div><div class="q-body">No tool helps editors find music that matches the <span style="color:var(--text);">emotional moment</span> of a story. Building a workflow-integrated solution for editors and creators.<br><br><span class="q-tag locked">○ LOCKED: IN VALIDATION</span></div></div>
@@ -1492,8 +1551,8 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
       <div style="font-family:'Press Start 2P',monospace;font-size:clamp(6px,0.8vw,7px);color:var(--text-dim);text-align:center;margin-bottom:12px;letter-spacing:1px;">OR FIND ME HERE</div>
       <div class="social-row">
         <a class="soc-a" href="mailto:brunohsa19@gmail.com">✉ &nbsp; EMAIL</a>
-        <a class="soc-a" href="https://www.instagram.com/bhsa1993/" target="_blank">◆ &nbsp; INSTAGRAM</a>
-        <a class="soc-a" href="https://www.linkedin.com/in/bruno-antonio-40a476157/" target="_blank">◈ &nbsp; LINKEDIN</a>
+        <a class="soc-a" href="https://www.instagram.com/bhsa1993/" target="_blank" rel="noopener noreferrer">◆ &nbsp; INSTAGRAM</a>
+        <a class="soc-a" href="https://www.linkedin.com/in/bruno-antonio-40a476157/" target="_blank" rel="noopener noreferrer">◈ &nbsp; LINKEDIN</a>
       </div>
     </div>
   </div>
@@ -1800,9 +1859,11 @@ document.addEventListener('keydown',    ensureAudio, { once: true });
       ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.s,0,Math.PI*2);
       ctx.fillStyle=`rgba(255,255,255,${s.a*0.85})`; ctx.fill();
     });
-    requestAnimationFrame(draw);
+    if (!document.hidden) requestAnimationFrame(draw);
   }
   draw();
+  // Pause animation when tab is not visible (saves battery/CPU)
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) draw(); });
 })();
 
 /* ---- Screen nav ---- */
@@ -1826,7 +1887,9 @@ function goTo(id) {
   setTimeout(() => {
     document.getElementById(CUR_SCREEN).classList.remove('active');
     HIST.push(CUR_SCREEN); CUR_SCREEN = id;
-    document.getElementById(id).classList.add('active');
+    const el = document.getElementById(id);
+    el.classList.add('active');
+    el.scrollTop = 0; // always reset scroll position on navigate
     const notHome = id !== 's-title' && id !== 's-hub';
     document.getElementById('back-btn').classList.toggle('show', notHome);
     // Show mute button whenever audio has been initialized
@@ -2027,14 +2090,72 @@ function initTimeOfDay() {
   document.getElementById('tod-overlay').style.background = bg;
 }
 
+/* ---- LocalStorage persistence ---- */
+const LS_KEY = 'ba_portfolio_v1';
+
+function saveProgress() {
+  try {
+    const flowers = [...document.querySelectorAll('[data-picked="1"]')].map(el => el.id);
+    const trees = {};
+    document.querySelectorAll('[data-stage]').forEach(el => { if (el.dataset.stage) trees[el.id] = el.dataset.stage; });
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      explored: [...exploredSet],
+      flowers,
+      trees,
+      npcIdx: npcDlgIdx,
+      reacted: { tree: reactedTree, pond: reactedPond, npc: reactedNPC, all6: reactedAll6 },
+      done: completionShown,
+    }));
+  } catch(e) {}
+}
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const s = JSON.parse(raw);
+    // Restore explored set
+    (s.explored || []).forEach(k => exploredSet.add(k));
+    // Restore flowers
+    (s.flowers || []).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.dataset.picked = '1'; el.textContent = '🌱'; el.style.animation = 'none'; }
+    });
+    // Restore tree stages
+    Object.entries(s.trees || {}).forEach(([id, stage]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.dataset.stage = stage;
+        el.classList.remove('stage-1','stage-2','stage-3');
+        el.classList.add('stage-'+stage);
+      }
+    });
+    npcDlgIdx       = s.npcIdx || 0;
+    if (npcDlgIdx > 1) { const tag = document.querySelector('.npc-tag'); if (tag) tag.textContent = 'GANROND'; }
+    reactedTree     = s.reacted?.tree  || false;
+    reactedPond     = s.reacted?.pond  || false;
+    reactedNPC      = s.reacted?.npc   || false;
+    reactedAll6     = s.reacted?.all6  || false;
+    completionShown = s.done || false;
+  } catch(e) {}
+}
+
 function initHub(){
   dlgIdx=0;
   document.getElementById('dlg-more').style.opacity='0';
+  // Set TAP vs CLICK based on device
+  document.getElementById('dlg-more').textContent = isTouchDevice ? '▼ TAP TO CONTINUE' : '▼ CLICK TO CONTINUE';
   showDlg(0);
+  loadProgress();
   updateTracker();
   initTimeOfDay();
 }
 document.getElementById('hub-dlg').addEventListener('click', advanceDlg);
+
+/* ---- Clamp player coordinates within safe map bounds ---- */
+function clampPos(x, y) {
+  return [Math.max(4, Math.min(96, x)), Math.max(20, Math.min(92, y))];
+}
 
 /* ---- Map click-to-move ---- */
 document.getElementById('hub-map').addEventListener('click', function(e) {
@@ -2043,8 +2164,10 @@ document.getElementById('hub-map').addEventListener('click', function(e) {
   const map = document.getElementById('hub-map');
   const player = document.getElementById('hub-player');
   const mapRect = map.getBoundingClientRect();
-  const tx = (e.clientX - mapRect.left) / mapRect.width * 100;
-  const ty = (e.clientY - mapRect.top) / mapRect.height * 100;
+  const [tx, ty] = clampPos(
+    (e.clientX - mapRect.left) / mapRect.width * 100,
+    (e.clientY - mapRect.top) / mapRect.height * 100
+  );
   player.classList.add('walking');
   startFootsteps();
   player.style.transition = 'left 0.45s cubic-bezier(0.4,0,0.6,1), top 0.45s cubic-bezier(0.4,0,0.6,1)';
@@ -2062,7 +2185,15 @@ function initStats(){
 }
 
 /* ---- Quest toggle ---- */
-function toggleQ(el){ const was=el.classList.contains('open'); document.querySelectorAll('.quest').forEach(q=>q.classList.remove('open')); if(!was)el.classList.add('open'); }
+function toggleQ(el){
+  const was = el.classList.contains('open');
+  document.querySelectorAll('.quest').forEach(q => q.classList.remove('open'));
+  if (!was) {
+    el.classList.add('open');
+    // Scroll expanded quest into view after animation settles
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+  }
+}
 
 /* ================================================================
    INTERACTIVE ENVIRONMENT
@@ -2112,6 +2243,7 @@ let reactedAll6   = false;
 
 function checkCompletion() {
   updateTracker();
+  saveProgress(); // persist after every state change
   if (completionShown) return;
   if (exploredSet.size >= 8) {
     completionShown = true;
@@ -2130,6 +2262,7 @@ function checkCompletion() {
     if (!reactedAll6) { // reuse flag or just push directly
       pushReactive('🎬', 'BRUNO', "You found everything. This world was built for people like you.");
     }
+    saveProgress();
   }
 }
 let statusTimer = null;
@@ -2157,8 +2290,10 @@ function tryInteract(e, id) {
   // Walk toward element, then auto-interact on arrival
   isMoving = true;
   const angle = Math.atan2(py - ey, px - ex);
-  const tx = ex + Math.cos(angle) * (PROXIMITY_PCT * 0.55);
-  const ty = ey + Math.sin(angle) * (PROXIMITY_PCT * 0.55);
+  const [tx, ty] = clampPos(
+    ex + Math.cos(angle) * (PROXIMITY_PCT * 0.55),
+    ey + Math.sin(angle) * (PROXIMITY_PCT * 0.55)
+  );
   player.classList.add('walking');
   startFootsteps();
   player.style.transition = 'left 0.52s cubic-bezier(0.4,0,0.6,1), top 0.52s cubic-bezier(0.4,0,0.6,1)';
@@ -2404,6 +2539,8 @@ function closeHubNav() {
 }
 // Close nav if user taps anywhere on the map
 document.getElementById('hub-map').addEventListener('click', closeHubNav);
+// Also close if tapping tracker body
+document.getElementById('tracker-body').addEventListener('click', closeHubNav);
 
 function updateTracker() {
   const map = {
@@ -2448,14 +2585,38 @@ function triggerKonami() {
 }
 
 /* ---- Contact form ---- */
-function handleSubmit(e){
+// TODO: Replace 'YOUR_FORM_ID' with your Formspree form ID.
+// Create a free account at formspree.io, make a new form, and paste the ID here.
+// Example: if your endpoint is https://formspree.io/f/xabc1234, the ID is xabc1234.
+const FORMSPREE_ID = 'YOUR_FORM_ID';
+
+async function handleSubmit(e) {
   e.preventDefault();
-  const fd=new FormData(e.target);
-  const sub=encodeURIComponent(`[Portfolio] ${fd.get('type')} — ${fd.get('name')}`);
-  const bod=encodeURIComponent(`From: ${fd.get('name')}\nEmail: ${fd.get('email')}\nService: ${fd.get('type')}\n\n${fd.get('message')}`);
-  window.location.href=`mailto:brunohsa19@gmail.com?subject=${sub}&body=${bod}`;
-  e.target.style.display='none';
-  document.getElementById('form-success').style.display='block';
+  const fd = new FormData(e.target);
+  const btn = e.target.querySelector('.submit-btn');
+  btn.textContent = '⏳ SENDING...';
+  btn.disabled = true;
+
+  // Try Formspree if configured, otherwise fall back to mailto
+  if (FORMSPREE_ID !== 'YOUR_FORM_ID') {
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        e.target.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+        return;
+      }
+    } catch(err) { /* fall through to mailto */ }
+  }
+
+  // Fallback: open email client
+  const sub = encodeURIComponent(`[Portfolio] ${fd.get('type')} — ${fd.get('name')}`);
+  const bod = encodeURIComponent(`From: ${fd.get('name')}\nEmail: ${fd.get('email')}\nService: ${fd.get('type')}\n\n${fd.get('message')}`);
+  window.open(`mailto:brunohsa19@gmail.com?subject=${sub}&body=${bod}`);
+  e.target.style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
 }
 </script>
 </body>
