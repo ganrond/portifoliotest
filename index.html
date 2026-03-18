@@ -239,7 +239,10 @@ html, body {
 ================================================================ */
 #s-hub { justify-content:flex-start; padding-top:clamp(10px,2vh,18px); }
 
-.hub-wrap { width:100%; display:flex; flex-direction:column; align-items:center; padding-bottom:clamp(125px,17vh,150px); position:relative; z-index:2; }
+.hub-wrap { width:100%; display:flex; flex-direction:column; align-items:center; padding-bottom:0; position:relative; z-index:2; }
+@media(min-width:700px) {
+  .hub-wrap { padding-bottom:clamp(125px,17vh,150px); }
+}
 
 /* ---- Map Container ---- */
 .hub-map {
@@ -509,14 +512,27 @@ html, body {
    HUB DIALOGUE BOX — responsive
 ================================================================ */
 #hub-dlg {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  height: clamp(100px,14vh,120px);
+  /* Mobile-first: static in flow */
+  position: static;
+  width: 100%;
+  height: auto; min-height: 80px;
   background: linear-gradient(180deg,#0d0d28,#070718);
   border-top: 3px solid var(--b-main);
   box-shadow: 0 0 0 1px var(--b-outer), 0 -6px 24px rgba(30,52,148,0.2), inset 0 1px 0 rgba(58,94,232,0.18);
   display: flex; align-items: center;
-  padding: clamp(10px,1.5vh,16px) clamp(14px,2.5vw,28px);
-  gap: clamp(12px,2vw,18px); z-index: 50;
+  padding: 8px 12px;
+  gap: 10px; z-index: 50;
+  flex-shrink: 0;
+}
+/* Desktop: fixed at bottom */
+@media(min-width:700px) {
+  #hub-dlg {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: clamp(100px,14vh,120px);
+    padding: clamp(10px,1.5vh,16px) clamp(14px,2.5vw,28px);
+    gap: clamp(12px,2vw,18px);
+    flex-shrink: unset;
+  }
 }
 .dlg-portrait {
   width: clamp(56px,8vw,76px); height: clamp(56px,8vw,76px); flex-shrink:0;
@@ -697,7 +713,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 ================================================================ */
 @media(max-width:600px) {
 
-  /* ---- HUB: flex column — map | tracker-bar | dialogue ---- */
+  /* ---- HUB: flex column — tracker | map | dialogue ---- */
   #s-hub {
     flex-direction: column;
     justify-content: flex-start;
@@ -707,7 +723,6 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   .hub-wrap {
     flex: 1;
     min-height: 0;
-    padding-bottom: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -725,16 +740,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   /* Nav dropdown: visible on mobile */
   #hub-nav { display: block; }
 
-  /* Tracker: static so it sits at top (first in DOM) */
-  #explore-tracker {
-    position: static;
-    width: 100%;
-    bottom: auto; top: auto; left: auto; right: auto;
-    border-top: 1px solid var(--b-main);
-    border-left: none; border-right: none;
-    box-shadow: none;
-    flex-shrink: 0;
-  }
+  /* Tracker — base CSS already handles position:static */
   .tracker-header { padding: 6px 12px; }
   .tracker-title  { font-size: 7px; }
   #tracker-progress { font-size: 7px; }
@@ -749,18 +755,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   }
   .tk-item { font-size: 7px; line-height: 1.5; width: 46%; }
 
-  /* Dialogue: static, below tracker */
-  #hub-dlg {
-    position: static;
-    flex-shrink: 0;
-    order: 3;
-    width: 100%;
-    height: auto;
-    min-height: 80px;
-    padding: 8px 12px;
-    gap: 10px;
-    border-top: 2px solid var(--b-main);
-  }
+  /* Dialogue — base CSS already handles position:static */
   .dlg-portrait { width: 44px; height: 44px; font-size: 20px; flex-shrink: 0; }
   .dlg-name     { font-size: 7px; }
   .dlg-text     { font-size: clamp(16px,4vw,20px); }
@@ -879,12 +874,22 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   }
 }
 
-/* Explorer achievement tracker */
+/* Explorer achievement tracker — mobile-first: static in flow by default */
 #explore-tracker {
-  position: absolute; left: clamp(8px,2vw,16px); bottom: clamp(128px,19vh,158px);
-  z-index: 50; width: clamp(200px,22vw,260px);
+  position: static;
+  width: 100%;
+  z-index: 50;
   background: rgba(3,3,16,0.92); border: 1px solid var(--b-main);
   box-shadow: 0 0 14px var(--b-glow), inset 0 0 8px rgba(0,0,0,0.5);
+  flex-shrink: 0;
+}
+/* Desktop only: pull it out of flow and position absolutely */
+@media(min-width:700px) {
+  #explore-tracker {
+    position: absolute; left: clamp(8px,2vw,16px); bottom: clamp(128px,19vh,158px);
+    width: clamp(200px,22vw,260px);
+    flex-shrink: unset;
+  }
 }
 .tracker-header {
   display: flex; align-items: center; justify-content: space-between;
