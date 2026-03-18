@@ -713,7 +713,7 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    order: 1;
+    order: 1; /* after tracker (order:0), before dialogue (order:3) */
   }
   .hub-map {
     width: 100vw;
@@ -723,10 +723,13 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
   }
   .hub-hint { display: none; }
 
-  /* Tracker: pulled OUT of absolute, sits between map and dialogue */
+  /* Nav dropdown: visible on mobile */
+  #hub-nav { display: block; }
+
+  /* Tracker: top of the hub, above the map */
   #explore-tracker {
     position: static;
-    order: 2;
+    order: 0;
     width: 100%;
     bottom: auto; top: auto; left: auto; right: auto;
     border-top: 1px solid var(--b-main);
@@ -913,6 +916,35 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 .tk-item.done .tk-dot { color: var(--green); }
 .tk-dot { color: var(--text-dim); }
 #tk-flower-ct { color: var(--text-dim); }
+
+/* Mobile fast-nav */
+#hub-nav {
+  display: none; /* shown only on mobile via media query */
+  position: absolute; top: 8px; right: 8px; z-index: 60;
+}
+#hub-nav-btn {
+  font-family: 'Press Start 2P', monospace; font-size: 10px;
+  background: rgba(3,3,16,0.92); color: var(--gold);
+  border: 1px solid var(--gold2); padding: 6px 10px;
+  letter-spacing: 1px;
+}
+#hub-nav-drop {
+  display: none;
+  flex-direction: column;
+  position: absolute; top: 100%; right: 0; margin-top: 4px;
+  background: rgba(3,3,16,0.97); border: 1px solid var(--b-main);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+  min-width: 160px; z-index: 60;
+}
+#hub-nav-drop.open { display: flex; }
+#hub-nav-drop button {
+  font-family: 'Press Start 2P', monospace; font-size: 7px;
+  color: var(--text-mid); background: transparent;
+  border: none; border-bottom: 1px solid var(--b-outer);
+  padding: 10px 14px; text-align: left; letter-spacing: 1px;
+}
+#hub-nav-drop button:last-child { border-bottom: none; }
+#hub-nav-drop button:active { background: rgba(58,94,232,0.15); color: var(--text); }
 
 /* Notice board */
 .t-board {
@@ -1262,6 +1294,17 @@ button, .portal, .soc-a, .q-watch, #hub-dlg { touch-action: manipulation; }
 
       <!-- Time-of-day ambient overlay -->
       <div id="tod-overlay"></div>
+
+      <!-- Mobile fast-nav dropdown -->
+      <div id="hub-nav">
+        <button id="hub-nav-btn" onclick="toggleHubNav()">☰</button>
+        <div id="hub-nav-drop">
+          <button onclick="goTo('s-stats');  closeHubNav()">📊 STATS</button>
+          <button onclick="goTo('s-quests'); closeHubNav()">📜 QUESTS</button>
+          <button onclick="goTo('s-guild');  closeHubNav()">⚔️ GUILD</button>
+          <button onclick="goTo('s-contact');closeHubNav()">📮 POST OFFICE</button>
+        </div>
+      </div>
 
       <!-- Player character — "YOU" -->
       <div id="hub-player">
@@ -2347,6 +2390,16 @@ function toggleTracker() {
   _trackerBody.classList.toggle('open', trackerOpen);
   _trackerToggle.textContent = trackerOpen ? '▲' : '▼';
 }
+
+/* ---- Mobile fast-nav ---- */
+function toggleHubNav() {
+  document.getElementById('hub-nav-drop').classList.toggle('open');
+}
+function closeHubNav() {
+  document.getElementById('hub-nav-drop').classList.remove('open');
+}
+// Close nav if user taps anywhere on the map
+document.getElementById('hub-map').addEventListener('click', closeHubNav);
 
 function updateTracker() {
   const map = {
